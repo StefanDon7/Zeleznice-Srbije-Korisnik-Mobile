@@ -1,0 +1,19 @@
+.popocetnaStanicaDiv{
+    
+    position:relative; 
+    left:500px;
+    top:50px; 
+    background-color:yellow;
+}
+.actionbutton{
+    background-color: red;
+    background-size: abs($number: 10px);
+    text-align: left;
+}
+.stanicaNazivLbl{
+    text-align: right;
+}
+.stanicaSelect{
+    align-self: right;
+    width: 10%;
+}

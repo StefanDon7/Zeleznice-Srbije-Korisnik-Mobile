@@ -1,0 +1,51 @@
+<ion-menu side="start" menuId="first" contentId="main">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Meni</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item fill="clear" color="dark" size="small" routerLink="/main" routerDirection="root">Pretrazi polaske</ion-item>
+      <ion-item fill="clear" color="dark" size="small" routerLink="/moje-rezervacije" routerDirection="root">Moje rezervacije</ion-item>
+      <ion-item fill="clear" color="dark" size="small" routerLink="/moj-nalog" routerDirection="root">Moj nalog</ion-item>
+      <ion-item fill="clear" color="dark" size="small" routerLink="/home" routerDirection="root">Odjavi se</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-router-outlet id="main"></ion-router-outlet>
+<ion-content>
+<body>
+  
+<div class="pocetnaStanicaDiv">
+<ion-list>
+    <ion-item class="pocetnaStanica">
+      <ion-label class="stanicaNazivLbl">Pocetna stanica</ion-label>
+      <ion-select class="stanicaSelect" [(ngModel)]="stanice1.nazivStanice"  interface="popover">
+        <ion-select-option *ngFor="let stanica1 of stanice1" [value]="stanica1">{{stanica1.nazivStanice}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+</ion-list>
+
+
+
+<ion-list>
+  <ion-item class="krajnjaStanica">
+    <ion-label class="stanicaNazivLbl">Krajnja stanica</ion-label> 
+    <ion-select class="stanicaSelect" [(ngModel)]="stanice2.nazivStanice"  interface="popover" >
+        <ion-select-option  *ngFor="let stanica2 of stanice2" [value]="stanica2">{{stanica2.nazivStanice}}</ion-select-option>
+     </ion-select>
+  </ion-item>
+</ion-list>
+
+
+<ion-button (click)="pretrazi(stanice1.nazivStanice,stanice2.nazivStanice)" type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;"> Pretrazi polaske</ion-button>
+
+<ion-list *ngFor="let polazak of polasci">
+  <ion-item>
+    <h5>{{polazak.naziv}}</h5>
+  </ion-item>
+</ion-list>
+</div>
+</body>
+</ion-content>

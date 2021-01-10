@@ -11,6 +11,22 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'main',
+    loadChildren: () => import('./main/main.module').then( m => m.MainPageModule)
+  },
+  {
+    path: 'moj-nalog',
+    loadChildren: () => import('./moj-nalog/moj-nalog.module').then( m => m.MojNalogPageModule)
+  },
+  {
+    path: 'moje-rezervacije',
+    loadChildren: () => import('./moje-rezervacije/moje-rezervacije.module').then( m => m.MojeRezervacijePageModule)
+  },
 ];
 
 @NgModule({
