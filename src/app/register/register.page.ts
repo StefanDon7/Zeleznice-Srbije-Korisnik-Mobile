@@ -19,7 +19,7 @@ export class RegisterPage implements OnInit {
     this.registerService.register(form.value.email,form.value.username,form.value.firstname,form.value.lastname,form.value.password).subscribe(data=>{
       if(data!=null){
         this.klijent=data;
-        alert("Dobrodošao: "+this.klijent.ime)
+        alert("Uspesno ste se registrovali: \n Korisnik:"+this.klijent.ime)
         form.resetForm();
       }else{
         alert("Sistem ne moze da pronadje korisnika!")

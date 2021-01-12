@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,5 +6,10 @@ import { Injectable } from '@angular/core';
 })
 export class MojNalogService {
 
-  constructor() { }
+  constructor(private http:HttpClient) { }
+
+  vratiKlijenta(id:string){
+    return this.http.post('http://localhost:8089/api/klijent/getbyid',{ "id": id})
+  }
+
 }

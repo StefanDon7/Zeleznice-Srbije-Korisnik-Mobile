@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { homedir } from 'os';
+import { rootCertificates } from 'tls';
+import { HomePage } from '../home/home.page';
+import { Klijent } from '../models/klijent.model';
 import { Stanica } from '../models/stanica.model';
 import { MainService } from './main.service';
 
@@ -10,14 +15,12 @@ import { MainService } from './main.service';
 })
 export class MainPage implements OnInit {
 
-  constructor(private mainService:MainService) { }
+  constructor(private mainService:MainService,private router: Router) { }
   stanice1:any=[];
   stanice2:any=[];
   polasci:any=[];
+  klijent:any;
   
-
-  
-
   ngOnInit() {
     this.vratiStanice();
     this.vratiStanice2();
@@ -44,6 +47,10 @@ export class MainPage implements OnInit {
     this.mainService.vratiPolaskeZaDanasnjiDan().subscribe(polasci=>{
       this.polasci=polasci;
     })
+  }
+  izlogujSe(){
+    sessionStorage.removeItem("klijent");
+    this.router.navigate(['/home']);
   }
 
 }
