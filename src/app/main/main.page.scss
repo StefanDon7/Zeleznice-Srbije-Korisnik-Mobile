@@ -1,19 +1,13 @@
-.popocetnaStanicaDiv{
-    
-    position:relative; 
-    left:500px;
-    top:50px; 
-    background-color:yellow;
+.rb{
+    width: 2px;
 }
-.actionbutton{
-    background-color: red;
-    background-size: abs($number: 10px);
-    text-align: left;
+.linija{
+    width: 100px;
 }
-.stanicaNazivLbl{
-    text-align: right;
+
+.datumPolaska{
+    width: 60px;
 }
-.stanicaSelect{
-    align-self: right;
-    width: 10%;
+.datumDolaska{
+    width: 65px;
 }

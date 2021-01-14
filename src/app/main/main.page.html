@@ -17,11 +17,11 @@
 <ion-content>
 <body>
   
-<div class="pocetnaStanicaDiv">
+
 <ion-list>
     <ion-item class="pocetnaStanica">
       <ion-label class="stanicaNazivLbl">Pocetna stanica</ion-label>
-      <ion-select class="stanicaSelect" [(ngModel)]="stanice1.nazivStanice"  interface="popover">
+      <ion-select class="stanicaSelect" [(ngModel)]="stanice1.nazivStanice"  interface="popover" placeholder="Izaberi stanicu">
         <ion-select-option *ngFor="let stanica1 of stanice1" [value]="stanica1">{{stanica1.nazivStanice}}</ion-select-option>
       </ion-select>
     </ion-item>
@@ -32,20 +32,54 @@
 <ion-list>
   <ion-item class="krajnjaStanica">
     <ion-label class="stanicaNazivLbl">Krajnja stanica</ion-label> 
-    <ion-select class="stanicaSelect" [(ngModel)]="stanice2.nazivStanice"  interface="popover" >
+    <ion-select class="stanicaSelect" [(ngModel)]="stanice2.nazivStanice"  interface="popover" placeholder="Izaberi stanicu">
         <ion-select-option  *ngFor="let stanica2 of stanice2" [value]="stanica2">{{stanica2.nazivStanice}}</ion-select-option>
      </ion-select>
   </ion-item>
 </ion-list>
+<ion-item>
+  <ion-label>Datum</ion-label>
+<ion-datetime  class="datum" [(ngModel)]="selectedDate" (ionChange)="convert()" [min]="today" placeholder="Datum"> </ion-datetime>
+</ion-item>
 
 
 <ion-button (click)="pretrazi(stanice1.nazivStanice,stanice2.nazivStanice)" type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;"> Pretrazi polaske</ion-button>
 
-<ion-list *ngFor="let polazak of polasci">
-  <ion-item>
-    <h5>{{polazak.naziv}}</h5>
-  </ion-item>
-</ion-list>
-</div>
+<ion-grid>
+  <ion-card>
+    <ion-row>
+      <ion-col class="rb">R.B.</ion-col>
+      <ion-col class="linija">Naziv linije</ion-col>
+      <ion-col class="datumPolaska">Polazak</ion-col>
+      <ion-col class="datumDolaska">Dolazak</ion-col>
+      <ion-col class="columnVratiMedjustanice">Lista Medjustanica</ion-col>
+      <ion-col class="columnRezervisi">Rezervisi</ion-col>
+    </ion-row>
+  </ion-card>
+<ion-card *ngFor="let polazak of polasci; let i=index">
+  <ion-row>
+    <ion-col class="rb">
+        {{i+1}}
+    </ion-col>
+    <ion-col class="linija">
+        <p class="linija">{{polazak.linija.stanicaPocetna.nazivStanice}}</p>
+        <p class="linija">{{polazak.linija.stanicaKrajnja.nazivStanice}}</p>
+        <p class="linija">{{polazak.linija.tipLinije.naziv}}</p>
+    </ion-col>
+    <ion-col class="datumPolaska">
+      <p class="datumPolaska">{{polazak.datumPolaska | date: 'dd/MM/'+'\n'+'yyyy'+'\n'+'HH:mm'}}</p>
+  </ion-col>
+  <ion-col class="datumDolaska">
+    <p class="datumDolaska">{{polazak.datumDolaska | date: 'dd/MM/'+'\n'+'yyyy'+'\n'+'HH:mm'}}</p>
+</ion-col>
+<ion-col class="columnVratiMedjustanice">
+  <ion-button class="columnVratiMedjustanice" (click)="vratiMedjustaniceZaPolazak(polazak.linija.linijaID)">list</ion-button>
+</ion-col>
+<ion-col class="columnRezervisi">
+  <ion-button class="columnRezervisi" (click)="rezervisiKartu(polazak.polazakID)">rezervisi</ion-button>
+</ion-col>
+  </ion-row>
+</ion-card>
+</ion-grid>
 </body>
 </ion-content>

@@ -26,4 +26,10 @@ export class MainService {
   vratiPolaske(stanicaPocetna:string,stanicaKrajnja:string,datum:string){
     return this.http.get('http://localhost:8089/api/polazak/'+datum+'/'+stanicaPocetna+'/'+stanicaKrajnja)
   }
+  rezervisiKartu(klijentID:string,polazakID:string){
+    return this.http.post('http://localhost:8089/api/rezervacija/add/',{ "klijentID": klijentID,"polazakID": polazakID})
+  }
+  vratiMedjustaniceZaPolazak(linijaID:string){
+    return this.http.get('http://localhost:8089/api/medjustanica/linija/'+linijaID)
+  }
 }

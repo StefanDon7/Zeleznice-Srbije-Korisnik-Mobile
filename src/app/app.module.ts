@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import{HttpClient,HttpClientModule} from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 import{CookieService} from 'angular2-cookie/services/cookies.service';
 import{NgxWebstorageModule} from 'ngx-webstorage';
@@ -20,6 +21,7 @@ import{NgxWebstorageModule} from 'ngx-webstorage';
   ],
   providers: [
     StatusBar,
+    DatePipe,
     CookieService,
     NgxWebstorageModule,
     SplashScreen,
