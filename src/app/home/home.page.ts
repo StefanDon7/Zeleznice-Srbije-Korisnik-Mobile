@@ -28,27 +28,28 @@ export class HomePage {
    signIn(form:NgForm){
     this.homeService.signin(form.value.email,form.value.password).subscribe(data=>{
       this.klijent=data;
-      console.log(this.klijent)
       this.prijaviKlijenta();
       form.resetForm();
     })
     
   }
-  async prijaviKlijenta(){
+   prijaviKlijenta(){
     if(this.klijent!=null){
       sessionStorage.setItem("klijent",this.klijent.id)
-      const alert= await this.alertController.create({
-        message: 'Zdravo '+this.klijent.ime,
-        buttons:['Ok']
-      });
-      await alert.present();
+      this.vratiPoruku("Uspesno prijavljivanje","Dobro dosli","Korisnik: "+this.klijent.ime+" "+this.klijent.prezime)
       this.router.navigate(['/main'])
     }else{
-      const alert= await this.alertController.create({
-        message: 'Progesno korisnicko ime i lozinka',
-        buttons:['Ok']
-      });
-      await alert.present();
+      this.vratiPoruku("Paznja","Pogresni parameteri","Proverite da li ste dobro uneili vase podatke!")
     }
+  }
+
+  async vratiPoruku(header: string, subHeader: string, poruka: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      subHeader: subHeader,
+      message: poruka,
+      buttons: ["Ok"],
+    });
+    await alert.present();
   }
   }

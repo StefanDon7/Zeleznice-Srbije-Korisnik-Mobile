@@ -11,4 +11,7 @@ export class RegisterService {
   register(email:string,korisnickoIme:string,ime:string,prezime:string,lozinka:string){
     return this.http.post('http://localhost:8089/api/klijent/add',{ "email": email,"korisnickoIme": korisnickoIme,"ime": ime,"prezime": prezime,"lozinka": lozinka})
   }
+  vratiKorisnika(email:string){
+    return this.http.post('http://localhost:8089/api/klijent/getbyemail',{ "email": email})
+  }
 }
