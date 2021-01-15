@@ -5,9 +5,32 @@
     width: 100px;
 }
 
-.datumPolaska{
-    width: 60px;
+.datumPolazak{
+    min-width: 80px;
+    text-align: right;
 }
-.datumDolaska{
-    width: 65px;
+.datumDolazak{
+    min-width: 80px;
+    text-align: right;
 }
+.actionbutton{
+    min-width: 100px;
+    background-color:#999999;
+    color:#000000;
+    font-size: 20px;
+}
+.rb{
+    min-width: 5px;
+    max-width: 30px;
+    text-align: left;
+}
+.linija{
+    min-width: 5px;
+    max-width: 75px;
+    text-align: right;
+}
+.rezervisi{
+    right: 0px;
+}
+
+

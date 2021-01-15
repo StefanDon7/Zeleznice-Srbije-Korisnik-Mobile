@@ -32,4 +32,7 @@ export class MainService {
   vratiMedjustaniceZaPolazak(linijaID:string){
     return this.http.get('http://localhost:8089/api/medjustanica/linija/'+linijaID)
   }
+  proveriRezervaciju(klijentID:string,polazakID:string){
+    return this.http.post('http://localhost:8089/api/rezervacija/get',{"klijentID": klijentID,"polazakID": polazakID})
+  }
 }

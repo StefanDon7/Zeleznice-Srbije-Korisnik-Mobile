@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 
 import{CookieService} from 'angular2-cookie/services/cookies.service';
 import{NgxWebstorageModule} from 'ngx-webstorage';
+import { AlertController } from '@ionic/angular';
 
 @NgModule({
   declarations: [AppComponent],

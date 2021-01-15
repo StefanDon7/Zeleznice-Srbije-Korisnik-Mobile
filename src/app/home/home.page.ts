@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { Klijent } from '../models/klijent.model';
@@ -18,24 +19,36 @@ import { HomeService } from './home.service';
 })
 export class HomePage {
 
-  constructor(private homeService:HomeService,private router: Router,private _cookieService:CookieService) {
+  constructor(private homeService:HomeService,private router: Router,private _cookieService:CookieService,private alertController:AlertController) {
     
     }
   klijent:any;
   
 
-  signIn(form:NgForm){
+   signIn(form:NgForm){
     this.homeService.signin(form.value.email,form.value.password).subscribe(data=>{
-      if(data!=null){
-        this.klijent=data;
-        this._cookieService.put('klijent',this.klijent)
-        sessionStorage.setItem("klijent",this.klijent.id)
-        alert("Dobrodošao: "+this.klijent.ime)
-        form.resetForm();
-        this.router.navigate(['/main'])
-      }else{
-        alert("Sistem ne moze da pronadje korisnika!")
-      }
+      this.klijent=data;
+      console.log(this.klijent)
+      this.prijaviKlijenta();
+      form.resetForm();
     })
+    
   }
-}
+  async prijaviKlijenta(){
+    if(this.klijent!=null){
+      sessionStorage.setItem("klijent",this.klijent.id)
+      const alert= await this.alertController.create({
+        message: 'Zdravo '+this.klijent.ime,
+        buttons:['Ok']
+      });
+      await alert.present();
+      this.router.navigate(['/main'])
+    }else{
+      const alert= await this.alertController.create({
+        message: 'Progesno korisnicko ime i lozinka',
+        buttons:['Ok']
+      });
+      await alert.present();
+    }
+  }
+  }

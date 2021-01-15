@@ -1,15 +1,29 @@
 <ion-menu side="start" menuId="first" contentId="main">
   <ion-header>
     <ion-toolbar color="primary">
-      <ion-title>Meni</ion-title>
+      <ion-title>
+        <ion-icon name="menu"></ion-icon>Meni
+            </ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item fill="clear" color="dark" size="small" routerLink="/main" routerDirection="root">Pretrazi polaske</ion-item>
-      <ion-item fill="clear" color="dark" size="small" routerLink="/moje-rezervacije" routerDirection="root">Moje rezervacije</ion-item>
-      <ion-item fill="clear" color="dark" size="small" routerLink="/moj-nalog" routerDirection="root">Moj nalog</ion-item>
-      <ion-item (click)="izlogujSe()" fill="clear" color="dark" size="small">Odjavi se</ion-item>
+      <ion-item fill="clear" color="dark" size="small" routerLink="/main" routerDirection="root">
+        <ion-icon name="search-circle"></ion-icon>        
+        Pretrazi polaske
+      </ion-item>
+      <ion-item fill="clear" color="dark" size="small" routerLink="/moje-rezervacije" routerDirection="root">
+        <ion-icon name="bag-check"></ion-icon>
+        Moje rezervacije
+      </ion-item>
+      <ion-item fill="clear" color="dark" size="small" routerLink="/moj-nalog" routerDirection="root">
+        <ion-icon name="person"></ion-icon>
+                Moj nalog
+      </ion-item>
+      <ion-item (click)="izlogujSe()" fill="clear" color="dark" size="small">
+        <ion-icon name="log-out"></ion-icon>
+        Odjavi se
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>
@@ -20,7 +34,8 @@
 
 <ion-list>
     <ion-item class="pocetnaStanica">
-      <ion-label class="stanicaNazivLbl">Pocetna stanica</ion-label>
+      <ion-label class="stanicaNazivLbl">
+        <ion-icon name="flag"></ion-icon>     Pocetna stanica</ion-label>
       <ion-select class="stanicaSelect" [(ngModel)]="stanice1.nazivStanice"  interface="popover" placeholder="Izaberi stanicu">
         <ion-select-option *ngFor="let stanica1 of stanice1" [value]="stanica1">{{stanica1.nazivStanice}}</ion-select-option>
       </ion-select>
@@ -31,29 +46,42 @@
 
 <ion-list>
   <ion-item class="krajnjaStanica">
-    <ion-label class="stanicaNazivLbl">Krajnja stanica</ion-label> 
+    <ion-label class="stanicaNazivLbl">
+      <ion-icon name="flag"></ion-icon>                  Krajnja stanica</ion-label> 
     <ion-select class="stanicaSelect" [(ngModel)]="stanice2.nazivStanice"  interface="popover" placeholder="Izaberi stanicu">
         <ion-select-option  *ngFor="let stanica2 of stanice2" [value]="stanica2">{{stanica2.nazivStanice}}</ion-select-option>
      </ion-select>
   </ion-item>
 </ion-list>
 <ion-item>
-  <ion-label>Datum</ion-label>
+  <ion-label>
+    <ion-icon name="calendar"></ion-icon>
+    Datum</ion-label>
 <ion-datetime  class="datum" [(ngModel)]="selectedDate" (ionChange)="convert()" [min]="today" placeholder="Datum"> </ion-datetime>
 </ion-item>
 
-
-<ion-button (click)="pretrazi(stanice1.nazivStanice,stanice2.nazivStanice)" type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;"> Pretrazi polaske</ion-button>
-
+<div class="actionButtonDiv">
+<ion-button (click)="pretrazi(stanice1.nazivStanice,stanice2.nazivStanice)" type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;">
+  <ion-icon name="search"></ion-icon>
+  Pretrazi polaske</ion-button>
+</div>
 <ion-grid>
-  <ion-card>
+ 
+ 
+  <ion-card class="card">
     <ion-row>
-      <ion-col class="rb">R.B.</ion-col>
-      <ion-col class="linija">Naziv linije</ion-col>
-      <ion-col class="datumPolaska">Polazak</ion-col>
-      <ion-col class="datumDolaska">Dolazak</ion-col>
-      <ion-col class="columnVratiMedjustanice">Lista Medjustanica</ion-col>
-      <ion-col class="columnRezervisi">Rezervisi</ion-col>
+      <ion-col class="rb">
+        <ion-icon name="ellipsis-vertical-circle-outline"></ion-icon>
+            R.B.</ion-col>
+      <ion-col class="linija">
+        <ion-icon name="train"></ion-icon>
+        Linija</ion-col>
+      <ion-col class="datumPolazak">
+        <ion-icon name="time"></ion-icon>
+        Polazak</ion-col>
+      <ion-col class="datumDolazak">
+        <ion-icon name="time"></ion-icon>
+        Dolazak</ion-col>
     </ion-row>
   </ion-card>
 <ion-card *ngFor="let polazak of polasci; let i=index">
@@ -62,24 +90,29 @@
         {{i+1}}
     </ion-col>
     <ion-col class="linija">
-        <p class="linija">{{polazak.linija.stanicaPocetna.nazivStanice}}</p>
-        <p class="linija">{{polazak.linija.stanicaKrajnja.nazivStanice}}</p>
-        <p class="linija">{{polazak.linija.tipLinije.naziv}}</p>
+        <p class="linija">{{polazak.linija.stanicaPocetna.nazivStanice}}  {{polazak.linija.stanicaKrajnja.nazivStanice}} ({{polazak.linija.tipLinije.naziv}})</p>
     </ion-col>
-    <ion-col class="datumPolaska">
-      <p class="datumPolaska">{{polazak.datumPolaska | date: 'dd/MM/'+'\n'+'yyyy'+'\n'+'HH:mm'}}</p>
+    <ion-col class="datumPolazak">
+      <p class="datumPolazak">{{polazak.datumPolaska | date: 'dd/MM/yyyy HH:mm'}}</p>
   </ion-col>
-  <ion-col class="datumDolaska">
-    <p class="datumDolaska">{{polazak.datumDolaska | date: 'dd/MM/'+'\n'+'yyyy'+'\n'+'HH:mm'}}</p>
-</ion-col>
-<ion-col class="columnVratiMedjustanice">
-  <ion-button class="columnVratiMedjustanice" (click)="vratiMedjustaniceZaPolazak(polazak.linija.linijaID)">list</ion-button>
-</ion-col>
-<ion-col class="columnRezervisi">
-  <ion-button class="columnRezervisi" (click)="rezervisiKartu(polazak.polazakID)">rezervisi</ion-button>
+  <ion-col class="datumDolazak">
+    <p class="datumDolazak">{{polazak.datumDolaska | date: 'dd/MM/yyyy HH:mm'}}</p>
 </ion-col>
   </ion-row>
+  <ion-button class="vratiMedjustanice" (click)="vratiMedjustaniceZaPolazak(polazak.linija.linijaID)">Medjustanice
+    <ion-icon name="train"></ion-icon>
+  </ion-button>
+  <ion-button class="rezervisi" (click)="rezervisiKartu(polazak.polazakID)">Rezervisi
+    <ion-icon name="checkbox"></ion-icon>
+  </ion-button>
 </ion-card>
 </ion-grid>
 </body>
 </ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Footer - No Border</ion-title>
+  </ion-toolbar>
+</ion-footer>
+
