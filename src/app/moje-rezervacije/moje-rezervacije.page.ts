@@ -15,22 +15,25 @@ export class MojeRezervacijePage implements OnInit {
     private router: Router,
     public _cookieService: CookieService,
     private alertController: AlertController
-  ) {}
+  ) {
+    this.klijent=sessionStorage.getItem("klijent");
+    this.rezervacije=this.vratiRezervacijeZaKlijenta();
+  }
 
   rezervacije: any = [];
-  sessionItem: any;
+  klijent: any;
   ngOnInit() {
-    this.vratiRezervacijeZaKlijenta();
+    console.log("Ponovo")
   }
 
   vratiRezervacijeZaKlijenta() {
-    this.sessionItem = sessionStorage.getItem("klijent");
-    if (this.sessionItem == null) {
+    this.klijent = sessionStorage.getItem("klijent");
+    if (this.klijent == null) {
       this.vratiPoruku("Пажња","","Морате се регистровати!");
       this.router.navigate(["/register"]);
     } else {
       this.mojerezervacijeservice
-        .vratiSveRezervacije(this.sessionItem)
+        .vratiSveRezervacije(this.klijent)
         .subscribe((data) => {
           this.rezervacije = data;
         });
@@ -41,8 +44,15 @@ export class MojeRezervacijePage implements OnInit {
     this.router.navigate(["/home"]);
   }
   otkazirezervaciju(polazakid:string) {
-
+    console.log(polazakid);
+    console.log(this.klijent)
+    this.mojerezervacijeservice.otkaziRezervaciju(this.klijent,polazakid).subscribe(data=>{
+         this.vratiRezervacijeZaKlijenta();
+         this.vratiPoruku("Успешно","отказана резервација","")
+    })
+    
   }
+  
 
   /*
 VRACA ALERT PORUKU!
@@ -56,4 +66,7 @@ VRACA ALERT PORUKU!
     });
     await alert.present();
   }
+  refresh(): void {
+    window.location.reload();
+}
 }

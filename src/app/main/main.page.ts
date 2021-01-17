@@ -15,7 +15,7 @@ import { Identifiers } from "@angular/compiler";
   styleUrls: ["./main.page.scss"],
 })
 export class MainPage implements OnInit {
-  [x: string]: any;
+  
 
   constructor(
     private mainService: MainService,
@@ -23,17 +23,23 @@ export class MainPage implements OnInit {
     public datepipe: DatePipe,
     private alertController: AlertController
     ) {
-    this.today = new Date().toISOString();
-    console.log(this.today);
   }
   stanice1: any = [];
   stanice2: any = [];
   polasci: any = [];
-  klijent: any;
+
+
+
   today: any;
   selectedDate: any;
   selectedDateConverted: any;
+
+  klijent: any;
+  
   rezervacija: any;
+  
+  
+  listaMedjustanica:any=[];
 
   ngOnInit() {
     this.vratiStanice();
@@ -46,7 +52,7 @@ export class MainPage implements OnInit {
   */
   pretrazi(stanicaPocetna: Stanica, stanicaKrajnja: Stanica) {
     if(!this.parametriDobri(stanicaPocetna,stanicaKrajnja)){
-      this.vratiPoruku("Greska","","Sva polja moraju biti popunjena!")
+      this.vratiPoruku("Грешка","","Сва поља морају бити попуњена!")
     }else{
     this.mainService
       .vratiPolaske(
@@ -91,7 +97,8 @@ export class MainPage implements OnInit {
   Prilikom otvaranja strane on nam daje sve polaske koji postoje za taj dan ne vezano za liniju
   */
   vratiPolaskeZaDanasnjiDan() {
-    this.mainService.vratiPolaskeZaDanasnjiDan().subscribe((polasci) => {
+    this.convertDanas();
+    this.mainService.vratiPolaskeZaDanasnjiDan(this.today).subscribe((polasci) => {
       this.polasci = polasci;
       console.log(polasci);
     });
@@ -115,31 +122,34 @@ export class MainPage implements OnInit {
     this.selectedDateConverted = selectedDateConverted;
     console.log(selectedDateConverted);
   }
+  convertDanas() {
+    this.today = new Date().toISOString();
+    console.log(this.today);
+    let danas = this.datepipe.transform(
+      this.today,
+      "yyyy-MM-dd"
+    );
+    this.today = danas;
+    console.log(this.today);
+  }
   /*
     Rezervisi kartu!
   */
-  rezervisiKartu(polazakid: string) {
-    this.klijent = sessionStorage.getItem("klijent");
-    if (this.klijent == null) {
-      this.vratiPoruku("Paznja", "", "Morate biti prijavljeni!");
-      this.router.navigate(["/home"]);
-    } else {
-      this.proveriRezervaciju(this.klijent, polazakid);
-      if (this.rezervacija != null) {
-        this.vratiPoruku(
-          "Paznja",
-          "",
-          "Vec ste rezervisali kartu za ovaj polazak!"
-        );
-      } else {
+  rezervisiKartuUnosUBazu(polazakid: string) {
+      if (this.rezervacija==null) {
         this.mainService
           .rezervisiKartu(this.klijent, polazakid)
           .subscribe((data) => {
-            this.rezervacija = data;
           });
-        this.vratiPoruku("Uspesno", "", "Uspesno ste rezervisali kartu!");
+        this.vratiPoruku("Полазак","", "Успешно сте резервисали карту за полазак!");
+      } else {
+        this.vratiPoruku(
+          "Пажња",
+          "",
+          "Већ сте резервисали овај полазак!!"
+        );
       }
-    }
+      this.rezervacija=null;
   }
 
   /*Prikazuje sve medjustanice za odredjenu liniju tj polazak koji klijent*/
@@ -151,13 +161,27 @@ export class MainPage implements OnInit {
   /*
   Proverava da li je klijent vec rezervisao kartu za polazak!
   */
-  proveriRezervaciju(klijentID: string, polazakID: string) {
+  rezervisiKartu(polazakID: string) {
+    console.log("1");
+    this.klijent = sessionStorage.getItem("klijent");
+    if (this.klijent == null) {
+      this.vratiPoruku("Пажња", "", "Морате бити пријављени како би резервисали карту!");
+      this.router.navigate(["/home"]);
+      return;
+    } 
+    console.log("2");
     this.mainService
-      .proveriRezervaciju(klijentID, polazakID)
+      .proveriRezervaciju(this.klijent, polazakID)
       .subscribe((data) => {
-        this.rezervacija = data;
+        console.log("3");
+            this.rezervacija=data;
+            console.log("4")
+            this.rezervisiKartuUnosUBazu(polazakID);
       });
+     
+     
   }
+  
 
   /*
 VRACA ALERT PORUKU!
@@ -171,4 +195,9 @@ VRACA ALERT PORUKU!
     });
     await alert.present();
   }
+  refresh(): void {
+    window.location.reload();
 }
+}
+
+

@@ -67,7 +67,7 @@
 <ion-card *ngFor="let polazak of polasci; let i=index">
   <ion-row>
     <ion-col class="rb">
-        {{i+1}}
+        {{polazak.polazakID}}
     </ion-col>
     <ion-col class="linija">
         <p class="linija">{{polazak.linija.stanicaPocetna.nazivStanice}}  {{polazak.linija.stanicaKrajnja.nazivStanice}} ({{polazak.linija.tipLinije.naziv}})</p>

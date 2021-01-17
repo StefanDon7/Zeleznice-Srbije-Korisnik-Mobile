@@ -19,8 +19,8 @@ export class MainService {
     return this.http.get('http://localhost:8089/api/stanica/all')
   }
 
-  vratiPolaskeZaDanasnjiDan(){
-    return this.http.get('http://localhost:8089/api/polazak/2020-10-04')
+  vratiPolaskeZaDanasnjiDan(danas:string){
+    return this.http.get('http://localhost:8089/api/polazak/'+danas)
   }
 
   vratiPolaske(stanicaPocetna:string,stanicaKrajnja:string,datum:string){
