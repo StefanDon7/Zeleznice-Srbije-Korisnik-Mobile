@@ -11,12 +11,14 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  navigate : any;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private _cookieService:CookieService
   ) {
+    this.sideMenu();
     this.initializeApp();
   }
 
@@ -25,5 +27,27 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  sideMenu()
+  {
+    this.navigate =
+    [
+      {
+        title : "Ред вожње",
+        url   : "/main",
+        icon  : "home"
+      },
+      {
+        title : "Мој налог",
+        url   : "/moj-nalog",
+        icon  : "person"
+      },
+      {
+        title : "Моје резервације",
+        url   : "/moje-rezervacije",
+        icon  : "ticket"
+      },
+    ]
   }
 }

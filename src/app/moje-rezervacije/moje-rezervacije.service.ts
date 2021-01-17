@@ -11,4 +11,5 @@ export class MojeRezervacijeService {
   vratiSveRezervacije(id:string){
     return this.http.post('http://localhost:8089/api/rezervacija/klijent/rezervacije',{ "id": id})
   }
+  
 }

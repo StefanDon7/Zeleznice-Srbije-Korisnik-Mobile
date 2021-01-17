@@ -1,24 +1,52 @@
-<ion-menu side="start" menuId="first" contentId="main">
-  <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>Meni</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list>
-      <ion-item fill="clear" color="dark" size="small" routerLink="/main" routerDirection="root">Pretrazi polaske</ion-item>
-      <ion-item fill="clear" color="dark" size="small" routerLink="/moje-rezervacije" routerDirection="root">Moje rezervacije</ion-item>
-      <ion-item fill="clear" color="dark" size="small" routerLink="/moj-nalog" routerDirection="root">Moj nalog</ion-item>
-      <ion-item (click)="izlogujSe()" fill="clear" color="dark" size="small">Odjavi se</ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    <ion-title>
+      Моје резервације
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-router-outlet id="main"></ion-router-outlet>
 
 <ion-content>
-  <ion-list *ngFor="let rezervacija of rezervacije">
-    <ion-item>
-      <h5>{{rezervacija}}</h5>
-    </ion-item>
-  </ion-list>
-  </ion-content>
+  <ion-grid> 
+     <ion-card class="card">
+      <ion-row>
+        <ion-col class="rb">
+              #</ion-col>
+        <ion-col class="linija">
+          <ion-icon name="train"></ion-icon>
+          Линија</ion-col>
+        <ion-col class="datumPolazak">
+          <ion-icon name="time"></ion-icon>
+          Полазак</ion-col>
+          <ion-col class="otkazi">
+            <ion-icon name="trash"></ion-icon>
+            Откажи резервацију</ion-col>
+      </ion-row>
+    </ion-card>
+  <ion-card *ngFor="let rezervacija of rezervacije  let i=index">
+    <ion-row>
+      <ion-col class="rb">
+          {{i+1}}
+      </ion-col>
+      <ion-col class="linija">
+          <p class="linija">
+            {{rezervacija.polazak.linija.stanicaPocetna.nazivStanice}}</p>  
+          <p>{{rezervacija.polazak.linija.stanicaKrajnja.nazivStanice}} </p> 
+          <p>({{rezervacija.polazak.linija.tipLinije.naziv}})</p>
+      </ion-col>
+      <ion-col class="datumPolazak">
+        <p class="datumPolazak">{{rezervacija.polazak.datumPolaska | date: 'dd/MM/yyyy HH:mm'}}</p>
+    </ion-col>
+  <ion-col>
+    <ion-button class="otkaziRezervaciju" (click)="otkazirezervaciju(rezervacija.polazak.polazakID)">Откажи
+      <ion-icon name="trash"></ion-icon>
+    </ion-button>
+  </ion-col>
+    </ion-row>
+  </ion-card>
+  </ion-grid>
+</ion-content>

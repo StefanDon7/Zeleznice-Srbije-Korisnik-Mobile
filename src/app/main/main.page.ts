@@ -22,7 +22,7 @@ export class MainPage implements OnInit {
     private router: Router,
     public datepipe: DatePipe,
     private alertController: AlertController
-  ) {
+    ) {
     this.today = new Date().toISOString();
     console.log(this.today);
   }
@@ -45,6 +45,9 @@ export class MainPage implements OnInit {
   Vraca sve polaske za pocetnu stanicu,krajnju stanicu i datum!
   */
   pretrazi(stanicaPocetna: Stanica, stanicaKrajnja: Stanica) {
+    if(!this.parametriDobri(stanicaPocetna,stanicaKrajnja)){
+      this.vratiPoruku("Greska","","Sva polja moraju biti popunjena!")
+    }else{
     this.mainService
       .vratiPolaske(
         stanicaPocetna.nazivStanice,
@@ -56,7 +59,18 @@ export class MainPage implements OnInit {
         console.log(stanicaKrajnja.nazivStanice);
         this.polasci = polasci;
       });
+    }
   }
+
+  parametriDobri(stanicaPocetna:Stanica,stanicaKrajnja:Stanica){
+    if(stanicaPocetna==null || stanicaKrajnja==null)
+      return false;
+    else if(this.selectedDateConverted==null){
+      return false;
+    }
+    return true;
+  }
+
   /*
  Vraca stanice i ubacuje ih u prvi kombo box!
   */

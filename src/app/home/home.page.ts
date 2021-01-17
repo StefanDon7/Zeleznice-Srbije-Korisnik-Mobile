@@ -16,7 +16,9 @@ export class HomePage {
     private router: Router,
     private _cookieService: CookieService,
     private alertController: AlertController
-  ) {}
+  ) {
+    
+  }
   klijent: any;
 
   signIn(form: NgForm) {
