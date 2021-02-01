@@ -16,10 +16,10 @@
       <ion-row>
         <ion-col class="rb">
               #</ion-col>
-        <ion-col class="linija">
+        <ion-col class="linija.kol">
           <ion-icon name="train"></ion-icon>
           Линија</ion-col>
-        <ion-col class="datumPolazak">
+        <ion-col class="datumPolazak.kol">
           <ion-icon name="time"></ion-icon>
           Полазак</ion-col>
           <ion-col class="otkazi">
@@ -30,21 +30,22 @@
   <ion-card *ngFor="let rezervacija of rezervacije  let i=index">
     <ion-row>
       <ion-col class="rb">
-          {{i+1}}
+          <p>{{i+1}}</p>
       </ion-col>
       <ion-col class="linija">
           <p class="linija">
             {{rezervacija.polazak.linija.stanicaPocetna.nazivStanice}}</p>  
-          <p>{{rezervacija.polazak.linija.stanicaKrajnja.nazivStanice}} </p> 
-          <p>({{rezervacija.polazak.linija.tipLinije.naziv}})</p>
+          <p class="linija">{{rezervacija.polazak.linija.stanicaKrajnja.nazivStanice}} </p> 
+          <p class="linija">({{rezervacija.polazak.linija.tipLinije.naziv}})</p>
       </ion-col>
       <ion-col class="datumPolazak">
         <p class="datumPolazak">{{rezervacija.polazak.datumPolaska | date: 'dd/MM/yyyy HH:mm'}}</p>
     </ion-col>
   <ion-col>
-    <ion-button class="otkaziRezervaciju" (click)="otkazirezervaciju(rezervacija.polazak.polazakID)">Откажи
+    <p><ion-button class="otkaziRezervaciju" (click)="otkazirezervaciju(rezervacija.polazak.polazakID)">Откажи
       <ion-icon name="trash"></ion-icon>
-    </ion-button>
+    </ion-button></p>
+    
   </ion-col>
     </ion-row>
   </ion-card>

@@ -3,24 +3,54 @@
       <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
       </ion-buttons>
-    <ion-title>
+    <ion-title style="color: #3171e0	;">
       Налог
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<form #a="ngForm" (ngSubmit)="izmeniNalog(a)"></form>
-  <ion-content >
-    <div class="ion-padding">
-     <ion-input type="text" placeholder="Емаил адреса"  ngModel name="email" required></ion-input> <br>
-    <ion-input type="text" placeholder="Корисничко име" ngModel name="username" required  ></ion-input><br>
-     <ion-input type="text" placeholder="Име" ngModel name="firstname" required></ion-input><br>
-      <ion-input type="text" placeholder="Презиме" ngModel name="lastname" required ></ion-input><br>
-     <ion-input type="password" placeholder="Лозинка" ngModel name="password" required  ></ion-input><br>
-      <ion-input type="password" placeholder="Понови лозинку" ngModel name="repassword" required ></ion-input>
-    </div>
-    <ion-button type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;">
-      <ion-icon name="person-add"></ion-icon>
-     Промени податке</ion-button>
-  </ion-content>
+<ion-content >
+<form #a="ngForm" (ngSubmit)="izmeniNalog(a)">
 
+    <div class="ion-padding">
+      <ion-item>
+        <ion-label position="floating"></ion-label>
+        <ion-input type="text" disabled="true" style="color: #646262;" >{{klijent?.email}}</ion-input>
+      </ion-item>
+      <br>
+      <ion-item>
+        <ion-label position="floating"></ion-label>
+        <ion-input type="text" disabled="true" style="color: #646262;">{{klijent?.ime}}</ion-input>
+      </ion-item>
+      <br>
+      <ion-item>
+        <ion-label position="floating"></ion-label>
+        <ion-input type="text" disabled="true" style="color: #646262;">{{klijent?.prezime}}</ion-input>
+      </ion-item>
+      <br>
+      <ion-item>
+        <ion-label position="floating" >{{klijent?.korisnickoIme}}</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+    </div>   
+    <ion-button type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;">
+      <ion-icon name="person"></ion-icon>
+     Промени податке</ion-button>
+</form>
+<form #a="ngForm" (ngSubmit)="izmeniSifru(a)">
+  <div class="ion-padding">
+  <ion-item>
+    <ion-label position="floating">Нова лозинка</ion-label>
+    <ion-input type="password" ngModel name="password"></ion-input>
+  </ion-item>
+  <br>
+  <ion-item>
+    <ion-label position="floating">Понови нову лозинку</ion-label>
+    <ion-input type="password" ngModel name="repassword"></ion-input>
+  </ion-item>
+</div>   
+<ion-button type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;">
+  <ion-icon name="key"></ion-icon>
+ Промени лозинку</ion-button>
+</form>
+</ion-content>
   

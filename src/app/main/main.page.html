@@ -1,96 +1,147 @@
 <ion-header>
+  
   <ion-toolbar>
-      <ion-buttons slot="start">
+    <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-    <ion-title>
-      Ред вожње
-    
-    </ion-title>
-    <ion-button slot="end" (click)="izlogujSe()" >Одјави се</ion-button>
+    </ion-buttons>
+    <ion-title> Ред вожње </ion-title>
+ 
   </ion-toolbar>
 </ion-header>
 <ion-content>
-<body>
-  
 
-<ion-list>
-    <ion-item class="pocetnaStanica">
-      <ion-label class="stanicaNazivLbl">
-        <ion-icon name="flag"></ion-icon>  Од</ion-label>
-      <ion-select class="stanicaSelect" [(ngModel)]="stanice1.nazivStanice"  interface="popover" placeholder="Изабери станицу">
-        <ion-select-option *ngFor="let stanica1 of stanice1" [value]="stanica1">{{stanica1.nazivStanice}}</ion-select-option>
-      </ion-select>
+    
+    <ion-list>
+      <ion-item class="pocetnaStanica">
+        <ion-label class="stanicaNazivLbl">
+          <ion-icon name="flag"></ion-icon> Од</ion-label
+        >
+        <ion-select
+          class="stanicaSelect"
+          [(ngModel)]="stanice1.nazivStanice"
+          interface="popover"
+          placeholder="Изабери станицу"
+        >
+          <ion-select-option
+            *ngFor="let stanica1 of stanice1"
+            [value]="stanica1"
+            >{{stanica1.nazivStanice}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-item class="krajnjaStanica">
+        <ion-label class="stanicaNazivLbl">
+          <ion-icon name="flag"></ion-icon> До</ion-label
+        >
+        <ion-select
+          class="stanicaSelect"
+          [(ngModel)]="stanice2.nazivStanice"
+          interface="popover"
+          placeholder="Изабери станицу"
+        >
+          <ion-select-option
+            *ngFor="let stanica2 of stanice2"
+            [value]="stanica2"
+            >{{stanica2.nazivStanice}}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-item>
+      <ion-label>
+        <ion-icon name="calendar"></ion-icon>
+        Датум</ion-label
+      >
+      <ion-datetime
+        class="datum"
+        [(ngModel)]="selectedDate"
+        (ionChange)="convert()"
+        [min]="today"
+        [max]="year"
+        placeholder="Изабери датум"
+      >
+      </ion-datetime>
     </ion-item>
-</ion-list>
+ 
 
+    
+      <ion-button
+        (click)="pretrazi(stanice1.nazivStanice,stanice2.nazivStanice)"
+        type="submit"
+        class="actionbutton"
+        expand="block"
+        fill="clear"
+        style="text-transform: none"
+      >
+        <ion-icon name="search"></ion-icon>
+        Претражи поласке</ion-button
+      >
+   
 
-
-<ion-list>
-  <ion-item class="krajnjaStanica">
-    <ion-label class="stanicaNazivLbl">
-      <ion-icon name="flag"></ion-icon>                  До</ion-label> 
-    <ion-select class="stanicaSelect" [(ngModel)]="stanice2.nazivStanice"  interface="popover" placeholder="Изабери станицу">
-        <ion-select-option  *ngFor="let stanica2 of stanice2" [value]="stanica2">{{stanica2.nazivStanice}}</ion-select-option>
-     </ion-select>
-  </ion-item>
-</ion-list>
-<ion-item>
-  <ion-label>
-    <ion-icon name="calendar"></ion-icon>
-    Датум</ion-label>
-<ion-datetime  class="datum" [(ngModel)]="selectedDate" (ionChange)="convert()" [min]="today" placeholder="Изабери датум"> </ion-datetime>
-</ion-item>
-
-<div class="actionButtonDiv">
-<ion-button (click)="pretrazi(stanice1.nazivStanice,stanice2.nazivStanice)" type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;">
-  <ion-icon name="search"></ion-icon>
-  Претражи поласке</ion-button>
-</div>
-<ion-content>
-<ion-grid>
-  <ion-card class="card">
-    <ion-row>
-      <ion-col class="rb">
-            #</ion-col>
-      <ion-col class="linija">
-        <ion-icon name="train"></ion-icon>
-        Линија</ion-col>
-      <ion-col class="datumPolazak">
-        <ion-icon name="time"></ion-icon>
-        Полазак</ion-col>
-      <ion-col class="datumDolazak">
-        <ion-icon name="time"></ion-icon>
-        Долазак</ion-col>
-    </ion-row>
-  </ion-card>
-<ion-card *ngFor="let polazak of polasci; let i=index">
-  <ion-row>
-    <ion-col class="rb">
-        {{polazak.polazakID}}
-    </ion-col>
-    <ion-col class="linija">
-        <p class="linija">{{polazak.linija.stanicaPocetna.nazivStanice}}  {{polazak.linija.stanicaKrajnja.nazivStanice}} ({{polazak.linija.tipLinije.naziv}})</p>
-    </ion-col>
-    <ion-col class="datumPolazak">
-      <p class="datumPolazak">{{polazak.datumPolaska | date: 'dd/MM/yyyy HH:mm'}}</p>
-  </ion-col>
-  <ion-col class="datumDolazak">
-    <p class="datumDolazak">{{polazak.datumDolaska | date: 'dd/MM/yyyy HH:mm'}}</p>
-</ion-col>
-  </ion-row>
-  <ion-button class="vratiMedjustanice" (click)="vratiMedjustaniceZaPolazak(polazak.linija.linijaID)">Medjustanice
-    <ion-icon name="train"></ion-icon>
-  </ion-button>
-  <ion-button class="rezervisi" (click)="rezervisiKartu(polazak.polazakID)">Rezervisi
-    <ion-icon name="checkbox"></ion-icon>
-  </ion-button>
-</ion-card>
-</ion-grid>
+  
+      <ion-card class="card">
+        <ion-row>
+          <ion-col class="rb"> #</ion-col>
+          <ion-col class="linija">
+            <ion-icon name="train"></ion-icon>
+            Линија</ion-col
+          >
+          <ion-col class="datumPolazak">
+            <ion-icon name="time"></ion-icon>
+            Полазак</ion-col
+          >
+          <ion-col class="datumDolazak">
+            <ion-icon name="time"></ion-icon>
+            Долазак</ion-col
+          >
+        </ion-row>
+      </ion-card>
+      <ion-grid>
+        <ion-card *ngFor="let polazak of polasci; let i=index">
+          <ion-row>
+            <ion-col class="rb"> {{polazak.polazakID}} </ion-col>
+            <ion-col class="linija">
+              <p class="linija">
+                {{polazak.linija.stanicaPocetna.nazivStanice}}
+                {{polazak.linija.stanicaKrajnja.nazivStanice}}
+                ({{polazak.linija.tipLinije.naziv}})
+              </p>
+            </ion-col>
+            <ion-col class="datumPolazak">
+              <p class="datumPolazak">
+                {{polazak.datumPolaska | date: 'dd/MM/yyyy HH:mm'}}
+              </p>
+            </ion-col>
+            <ion-col class="datumDolazak">
+              <p class="datumDolazak">
+                {{polazak.datumDolaska | date: 'dd/MM/yyyy HH:mm'}}
+              </p>
+            </ion-col>
+          </ion-row>
+          <ion-button
+            class="vratiMedjustanice"
+            (click)="vratiMedjustaniceZaPolazak(polazak.linija.linijaID,polazak.linija.stanicaPocetna.nazivStanice,polazak.linija.stanicaKrajnja.nazivStanice)"
+            >Medjustanice
+            <ion-icon name="train"></ion-icon>
+          </ion-button>
+          <ion-button
+            class="rezervisi"
+            (click)="rezervisiKartu(polazak.polazakID,polazak.datumPolaska)"
+            >Rezervisi
+            <ion-icon name="checkbox"></ion-icon>
+          </ion-button>
+        </ion-card>
+      </ion-grid>
+      <ion-footer>
+        <ion-toolbar>
+          <ion-title style="float: right;"> © Железнице Србије</ion-title>
+        </ion-toolbar>
+      </ion-footer>
 </ion-content>
-</body>
 
-</ion-content>
 
 
 

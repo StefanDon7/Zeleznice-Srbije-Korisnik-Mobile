@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { AlertController, MenuController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { Router } from '@angular/router';
+import { MojeRezervacijePage } from './moje-rezervacije/moje-rezervacije.page';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +13,20 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
 })
 export class AppComponent {
   navigate : any;
+  ishidden: boolean=true;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private _cookieService:CookieService
-  ) {
+    private router: Router,
+    private alertController:AlertController,
+    private menuController:MenuController
+      ) {
     this.sideMenu();
     this.initializeApp();
+    if(sessionStorage.getItem("klijent")!=null){
+      this.ishidden=false;
+    }
   }
 
   initializeApp() {
@@ -30,13 +37,17 @@ export class AppComponent {
   }
 
   sideMenu()
-  {
-    this.navigate =
+  {  this.navigate =
     [
+      {
+        title : "Почетна",
+        url   : "/home",
+        icon  : "home"
+      },
       {
         title : "Ред вожње",
         url   : "/main",
-        icon  : "home"
+        icon  : "train"
       },
       {
         title : "Мој налог",
@@ -50,4 +61,51 @@ export class AppComponent {
       },
     ]
   }
+  openPage(page:string){
+    if(page=="/moje-rezervacije"){
+      if(sessionStorage.getItem("klijent")==null){   
+        this.router.navigate(["/register"]);
+        this.vratiPoruku("Пажња","","Морате бити регистровати!");
+      }else{
+        this.router.navigate([page])
+      }
+    }else if(page=="/moj-nalog"){
+      if(sessionStorage.getItem("klijent")==null){
+        this.router.navigate(["/register"]);
+        this.vratiPoruku("Пажња","","Морате бити регистровати!");
+      }else{
+        this.router.navigate([page])
+      }
+    }
+    else if(page=="/main"){
+      this.router.navigate([page]);
+    }
+    else{
+      this.router.navigate(["/home"]);
+    }
+    
+  }
+  async vratiPoruku(header: string, subHeader: string, poruka: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      subHeader: subHeader,
+      message: poruka,
+      buttons: ["Ok"],
+    });
+    await alert.present();
+  }
+   /*
+  Unistava sessiju za klijenta i odjavljuje se!
+  */
+ izlogujSe() {
+  sessionStorage.removeItem("klijent");
+  sessionStorage.removeItem("klijentEmail");
+  sessionStorage.removeItem("klijentIme");
+  sessionStorage.removeItem("klijentPrezime");
+  sessionStorage.removeItem("klijentKorisnickoIme");
+  this.router.navigate(["/home"]);
+  this.menuController.close();
+  this.ishidden=true;
+
+}
 }

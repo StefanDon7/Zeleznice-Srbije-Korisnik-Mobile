@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="background">
-  <div class="content">
+  <div class="ion-padding">
     <div class="button-action">
       <ion-button fill="clear" color="dark" size="small" routerLink="/home" routerDirection="root">
         <ion-icon name="log-in"></ion-icon>
@@ -25,12 +25,35 @@
  
     <form #a="ngForm" (ngSubmit)="register(a)">
       <div class="ion-padding">
-        <ion-input type="text" placeholder="Емаил адреса" ngModel name="email" required  style="padding-left:10px !important; color:darkblue; font-family: 'Nunito',san-serif;"></ion-input> <br>
-        <ion-input type="text" placeholder="Корисничко име" ngModel name="username" required  style="padding-left:10px !important; color:darkblue; font-family: 'Nunito',san-serif;"></ion-input><br>
-        <ion-input type="text" placeholder="Име" ngModel name="firstname" required style="padding-left:10px !important; color:darkblue; font-family: 'Nunito',san-serif;"></ion-input> <br>
-        <ion-input type="text" placeholder="Презиме" ngModel name="lastname" required  style="padding-left:10px !important; color:darkblue; font-family: 'Nunito',san-serif;"></ion-input><br>
-        <ion-input type="password" placeholder="Лозинка" ngModel name="password" required  style="padding-left:10px !important; color:darkblue; font-family: 'Nunito',san-serif;"></ion-input><br>
-        <ion-input type="password" placeholder="Понови лозинку" ngModel name="repassword" required  style="padding-left:10px !important; color:darkblue; font-family: 'Nunito',san-serif;"></ion-input>
+        <ion-item class="red">
+          <ion-label position="floating">Емаил адреса</ion-label>
+          <ion-input type="text"  ngModel name="email" required  ></ion-input>
+        </ion-item>
+        <hr>
+        <ion-item class="red">
+          <ion-label position="floating">Корисничко име</ion-label>
+          <ion-input type="text"  ngModel name="username" required  ></ion-input>
+        </ion-item>
+        <hr>
+        <ion-item class="red">
+          <ion-label position="floating">Име</ion-label>
+          <ion-input type="text"  ngModel name="firstname" required ></ion-input>
+        </ion-item>
+        <hr>
+        <ion-item class="red">
+          <ion-label position="floating">Презиме</ion-label>
+          <ion-input type="text"  ngModel name="lastname" required  > </ion-input>
+        </ion-item>
+        <hr>
+        <ion-item class="red">
+          <ion-label position="floating">Лозинка</ion-label>
+          <ion-input type="password"  ngModel name="password" required > </ion-input>
+        </ion-item>
+        <hr>
+        <ion-item class="red"> 
+          <ion-label position="floating">Понови лозинку</ion-label>
+          <ion-input type="password" ngModel name="repassword" required  ></ion-input>
+        </ion-item>
       </div>
       <ion-button type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;">
         <ion-icon name="person-add"></ion-icon>
@@ -39,3 +62,8 @@
   </div>
   
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-title style="float: right;"> © Железнице Србије</ion-title>
+  </ion-toolbar>
+</ion-footer>

@@ -3,6 +3,8 @@ import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
 import { CookieService } from "angular2-cookie/services/cookies.service";
+import { AppComponent } from "../app.component";
+import { Klijent } from "../models/klijent.model";
 import { HomeService } from "./home.service";
 
 @Component({
@@ -15,20 +17,23 @@ export class HomePage {
     private homeService: HomeService,
     private router: Router,
     private _cookieService: CookieService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private appComponents:AppComponent
   ) {
     
   }
-  klijent: any;
+  klijent: Klijent;
 
   signIn(form: NgForm) {
     if(!this.proveriPolja(form)){
-      this.vratiPoruku("Paznja","","Sva polja moraju biti popunjena!")
+      this.vratiPoruku("Пажња","","Сва поља морају бити попуњена!")
     }else{ 
     this.homeService
       .signin(form.value.email, form.value.password)
       .subscribe((data) => {
-        this.klijent = data;
+        if(data!=null){
+          this.klijent = new Klijent(data.klijentID,data.korisnickoIme,data.ime,data.prezime,data.email,null);
+        }
         this.prijaviKlijenta();
         form.resetForm();
       });
@@ -36,18 +41,23 @@ export class HomePage {
   }
   prijaviKlijenta() {
     if (this.klijent != null) {
-      sessionStorage.setItem("klijent", this.klijent.id);
+      sessionStorage.setItem("klijent", this.klijent.klijentID+"");
+      sessionStorage.setItem("klijentIme", this.klijent.ime+"");
+      sessionStorage.setItem("klijentPrezime", this.klijent.prezime+"");
+      sessionStorage.setItem("klijentEmail", this.klijent.email+"");
+      sessionStorage.setItem("klijentKorisnickoIme", this.klijent.korisnickoIme+"");
       this.vratiPoruku(
-        "Uspesno prijavljivanje",
-        "Dobro dosli",
-        "Korisnik: " + this.klijent.ime + " " + this.klijent.prezime
+        "Успешно пријављивање",
+        "Добро дошли",
+        "Корисник: " + this.klijent.ime + " " + this.klijent.prezime
       );
       this.router.navigate(["/main"]);
+      this.appComponents.ishidden=false;
     } else {
       this.vratiPoruku(
-        "Paznja",
-        "Pogresni parameteri",
-        "Proverite da li ste dobro uneili vase podatke!"
+        "Пажња",
+        "Погрешни параметри",
+        "Проверите да ли добро унели емаил и лозинку!"
       );
     }
   }
@@ -57,7 +67,7 @@ export class HomePage {
       header: header,
       subHeader: subHeader,
       message: poruka,
-      buttons: ["Ok"],
+      buttons: ["Ок"],
     });
     await alert.present();
   }

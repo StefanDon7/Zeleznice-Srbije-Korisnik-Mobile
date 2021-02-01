@@ -1,4 +1,15 @@
 .rb{
-    min-width: 70px;
+    max-width: 30px;
+    min-width: 30px;
+    text-align: right;
+}
+.linija.kol{
+    min-width: 90px;
+    max-width: 90px;
+    text-align: right;
+}
+.linija{
+    min-width: 90px;
+    max-width: 90px;
     text-align: left;
 }

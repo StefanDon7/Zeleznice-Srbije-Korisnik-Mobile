@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
+import { from } from "rxjs";
 import { Klijent } from "../models/klijent.model";
 import { RegisterService } from "./register.service";
 
@@ -16,27 +17,16 @@ export class RegisterPage implements OnInit {
     private alertController: AlertController,
     private router: Router
   ) {}
-  klijent: any;
+  klijent: Klijent;
   email: any;
   ngOnInit() {}
 
   register(form: NgForm) {
-    if(!this.proveriPolja(form)){
-      this.vratiPoruku("Paznja","","Sva polja moraju biti popunjena!")
-    }else if(!this.lozinkeSeNePoklapaju(form)){
-      this.vratiPoruku("Paznja","","Lozinke se ne podudaraju!")
-    }
-    else{
-    this.proveriKorisnika(form.value.email);
-    if (this.email != null) {
-      this.vratiPoruku(
-        "Paznja",
-        "",
-        "Nalog sa email adresom: " +
-          form.value.email +
-          " vec postoji u sistemu!"
-      );
-      form.resetForm();
+    this.email=form.value.email;
+    if (!this.proveriPolja(form)) {
+      this.vratiPoruku("Пажња", "", "Сва поља морају бити попуњена!");
+    } else if (!this.lozinkeSeNePoklapaju(form)) {
+      this.vratiPoruku("Пажња", "", "Потврда лозинке није успела!");
     } else {
       this.registerService
         .register(
@@ -46,14 +36,32 @@ export class RegisterPage implements OnInit {
           form.value.lastname,
           form.value.password
         )
-        .subscribe((data) => {
-          this.klijent = data;
-          this.registracijaKlijenta();
-        });
+        .subscribe(
+          (data) => {
+            this.klijent = new Klijent(
+              data.klijentID,
+              data.korisnickoIme,
+              data.ime,
+              data.prezime,
+              data.email,
+              null
+            );
+            this.registracijaKlijenta();
+            this.router.navigate(["/home"]);
+          },
+          (error) => {
+            console.log("UHVACEN ERROR");
+            this.vratiPoruku(
+              "Пажња",
+              "",
+              "Налог са емаил адресом: " +
+              this.email +
+                " већ постоји у систему!"
+            );
+          }
+        );
+      form.resetForm();
     }
-    form.resetForm();
-    this.router.navigate(["/home"]);
-  }
   }
   proveriKorisnika(email: string) {
     this.registerService.vratiKorisnika(email).subscribe((data) => {
@@ -63,15 +71,15 @@ export class RegisterPage implements OnInit {
   registracijaKlijenta() {
     if (this.klijent != null) {
       this.vratiPoruku(
-        "Uspesna registracija",
+        "Успешна регистрација",
         "",
-        "Korisnik: " + this.klijent.ime + " " + this.klijent.prezime
+        "Корисник: " + this.klijent.ime + " " + this.klijent.prezime
       );
     } else {
       this.vratiPoruku(
-        "Neuspesno registracija",
+        "Неуспешна регистрација",
         "",
-        "Sistem ne moze da registruje korisnika!"
+        "Систем не може да региструје корисника!"
       );
     }
   }
@@ -80,7 +88,7 @@ export class RegisterPage implements OnInit {
       header: header,
       subHeader: subHeader,
       message: poruka,
-      buttons: ["Ok"],
+      buttons: ["Ок"],
     });
     await alert.present();
   }
@@ -94,18 +102,18 @@ export class RegisterPage implements OnInit {
       return false;
     } else if (form.value.firstname == "" || form.value.firstname == null) {
       return false;
-    }else if (form.value.lastname == "" || form.value.lastname == null) {
+    } else if (form.value.lastname == "" || form.value.lastname == null) {
       return false;
-    }else if (form.value.password == "" || form.value.password == null) {
+    } else if (form.value.password == "" || form.value.password == null) {
       return false;
-    }else if (form.value.repassword == "" || form.value.repassword == null) {
+    } else if (form.value.repassword == "" || form.value.repassword == null) {
       return false;
-    }else {
+    } else {
       return true;
     }
   }
-  lozinkeSeNePoklapaju(form: NgForm){
-    if(form.value.password!=form.value.repassword){
+  lozinkeSeNePoklapaju(form: NgForm) {
+    if (form.value.password != form.value.repassword) {
       return false;
     }
     return true;

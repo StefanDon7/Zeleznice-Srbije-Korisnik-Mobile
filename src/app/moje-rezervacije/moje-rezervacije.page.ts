@@ -23,7 +23,7 @@ export class MojeRezervacijePage implements OnInit {
   rezervacije: any = [];
   klijent: any;
   ngOnInit() {
-    console.log("Ponovo")
+    this.vratiRezervacijeZaKlijenta();
   }
 
   vratiRezervacijeZaKlijenta() {
@@ -39,10 +39,7 @@ export class MojeRezervacijePage implements OnInit {
         });
     }
   }
-  izlogujSe() {
-    sessionStorage.removeItem("klijent");
-    this.router.navigate(["/home"]);
-  }
+
   otkazirezervaciju(polazakid:string) {
     console.log(polazakid);
     console.log(this.klijent)
@@ -62,7 +59,7 @@ VRACA ALERT PORUKU!
       header: header,
       subHeader: subHeader,
       message: poruka,
-      buttons: ["Ok"],
+      buttons: ["Ок"],
     });
     await alert.present();
   }

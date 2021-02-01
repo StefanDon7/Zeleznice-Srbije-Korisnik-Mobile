@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { Klijent } from '../models/klijent.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class HomeService {
 
 
   signin(email:string,password:string){
-    return this.http.post('http://localhost:8089/api/klijent/get',{ "email": email,"lozinka": password})
+    return this.http.post<Klijent>('http://localhost:8089/api/klijent/get',{ "email": email,"lozinka": password})
   }
  
 }

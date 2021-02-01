@@ -23,14 +23,17 @@ export class MainPage implements OnInit {
     public datepipe: DatePipe,
     private alertController: AlertController
     ) {
+     
+      
   }
   stanice1: any = [];
   stanice2: any = [];
   polasci: any = [];
-
+  
 
 
   today: any;
+  year: any;
   selectedDate: any;
   selectedDateConverted: any;
 
@@ -47,12 +50,13 @@ export class MainPage implements OnInit {
     this.vratiPolaskeZaDanasnjiDan();
   }
 
+
   /*
   Vraca sve polaske za pocetnu stanicu,krajnju stanicu i datum!
   */
   pretrazi(stanicaPocetna: Stanica, stanicaKrajnja: Stanica) {
     if(!this.parametriDobri(stanicaPocetna,stanicaKrajnja)){
-      this.vratiPoruku("Грешка","","Сва поља морају бити попуњена!")
+      this.vratiPoruku("Грешка","","Сва поља морају бити изабрана!")
     }else{
     this.mainService
       .vratiPolaske(
@@ -61,10 +65,10 @@ export class MainPage implements OnInit {
         this.selectedDateConverted
       )
       .subscribe((polasci) => {
-        console.log(stanicaPocetna.nazivStanice);
-        console.log(stanicaKrajnja.nazivStanice);
+        console.log(polasci)
         this.polasci = polasci;
       });
+      
     }
   }
 
@@ -104,13 +108,7 @@ export class MainPage implements OnInit {
     });
   }
 
-  /*
-  Unistava sessiju za klijenta i odjavljuje se!
-  */
-  izlogujSe() {
-    sessionStorage.removeItem("klijent");
-    this.router.navigate(["/home"]);
-  }
+ 
   /*
   Prilikom selektovanja datuma u uzima datum i konvertuje ga u odgovarajuci format kako bi u bazi mogao da ga nadje!
   */
@@ -129,8 +127,15 @@ export class MainPage implements OnInit {
       this.today,
       "yyyy-MM-dd"
     );
+    let godina = this.datepipe.transform( 
+      this.today,
+      "yyyy"
+    );
     this.today = danas;
+    this.year=godina;
+    this.year++;
     console.log(this.today);
+    console.log(this.year);
   }
   /*
     Rezervisi kartu!
@@ -153,22 +158,34 @@ export class MainPage implements OnInit {
   }
 
   /*Prikazuje sve medjustanice za odredjenu liniju tj polazak koji klijent*/
-  vratiMedjustaniceZaPolazak(id: string) {
+  vratiMedjustaniceZaPolazak(id: string,pocetna:string,krajnja:string) {
     this.mainService.vratiMedjustaniceZaPolazak(id).subscribe((data) => {
       this.listaMedjustanica = data;
+      console.log(this.listaMedjustanica)
+      let string="";
+      for (let index = 0; index < this.listaMedjustanica.length; index++) {
+        string+=this.listaMedjustanica[index].redniBroj+". "+this.listaMedjustanica[index].stanica.nazivStanice+"<p>"
+      }
+      this.vratiPoruku("Међустанице на линији",pocetna+"-"+krajnja,string);
     });
   }
   /*
   Proverava da li je klijent vec rezervisao kartu za polazak!
   */
-  rezervisiKartu(polazakID: string) {
+  rezervisiKartu(polazakID: string,datumPolaska1:string) {
     console.log("1");
+    let datumPolaska = new Date(datumPolaska1);
+    console.log(datumPolaska)
+    var vremeRezervacije=new Date;
+    console.log(vremeRezervacije)
     this.klijent = sessionStorage.getItem("klijent");
     if (this.klijent == null) {
       this.vratiPoruku("Пажња", "", "Морате бити пријављени како би резервисали карту!");
       this.router.navigate(["/home"]);
       return;
     } 
+    
+    if(datumPolaska>vremeRezervacije){
     console.log("2");
     this.mainService
       .proveriRezervaciju(this.klijent, polazakID)
@@ -178,20 +195,18 @@ export class MainPage implements OnInit {
             console.log("4")
             this.rezervisiKartuUnosUBazu(polazakID);
       });
-     
+    }else{
+      this.vratiPoruku("Пажња","","Не можете резервисати карту за полазак који је реализован!")
+    }
      
   }
-  
 
-  /*
-VRACA ALERT PORUKU!
-*/
   async vratiPoruku(header: string, subHeader: string, poruka: string) {
     const alert = await this.alertController.create({
       header: header,
       subHeader: subHeader,
       message: poruka,
-      buttons: ["Ok"],
+      buttons: ["Ок"],
     });
     await alert.present();
   }

@@ -15,17 +15,14 @@ export class MojNalogPage implements OnInit {
     private mojnalogservice: MojNalogService,
     private router: Router,
     private alertController:AlertController
-  ) {}
+  ) {
+    this.vratiKlijenta();
+  }
   sessionItem: any;
-  public klijent: any;
+  public klijent: Klijent;
 
   ngOnInit() {
     this.vratiKlijenta();
-  }
-
-  izlogujSe() {
-    sessionStorage.removeItem("klijent");
-    this.router.navigate(["/home"]);
   }
 
   vratiKlijenta() {
@@ -36,11 +33,13 @@ export class MojNalogPage implements OnInit {
     } else {
       this.mojnalogservice.vratiKlijenta(this.sessionItem).subscribe((data) => {
         this.klijent = data;
-        console.log(this.klijent);
       });
     }
   }
   izmeniNalog(form:NgForm){
+    
+  }
+  izmeniSifru(form:NgForm){
     
   }
 
