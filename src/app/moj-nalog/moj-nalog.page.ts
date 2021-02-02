@@ -37,10 +37,41 @@ export class MojNalogPage implements OnInit {
     }
   }
   izmeniNalog(form:NgForm){
-    
+    let sessionItem = sessionStorage.getItem("klijent");
+      this.mojnalogservice.izmeniKorisnickoIme(sessionItem,form.value.korisnickoIme).subscribe(data=>{
+        let odgovor=data;
+        if(odgovor==0){
+          this.vratiPoruku("Пажња","","Систем није успео да запамти промену!");
+          form.reset();
+        }else{
+          this.vratiPoruku("Пажња","","Успешно сте променили лозинку!");
+          form.reset();
+          this.refresh();
+        }
+      },(error) => {
+        this.vratiPoruku("Грешка","","Десила се грешка!");
+        form.reset();
+      })
   }
   izmeniSifru(form:NgForm){
-    
+    if(form.value.password==form.value.password){
+      this.mojnalogservice.izmeniSifru(this.sessionItem,form.value.password).subscribe(data=>{
+        let odgovor=data;
+        if(odgovor==0){
+          this.vratiPoruku("Пажња","","Систем није успео да запамти промену!");
+          form.reset();
+        }else{
+          this.vratiPoruku("Пажња","","Успешно сте променили лозинку!");
+          form.reset();
+          }
+      },(error) => {
+        this.vratiPoruku("Грешка","","Десила се грешка!");
+        form.reset();
+      })
+    }else{
+      this.vratiPoruku("Пажња","","Поновљена лозинка није добра!");
+      form.reset();
+    }
   }
 
 
@@ -55,6 +86,9 @@ async vratiPoruku(header: string, subHeader: string, poruka: string) {
     buttons: ["Ok"],
   });
   await alert.present();
+}
+refresh(): void {
+  window.location.reload();
 }
 
 }
