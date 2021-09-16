@@ -2,20 +2,20 @@
   <ion-menu side="start" menuId="first" contentId="content1">
     <ion-header>
       <ion-toolbar>
-        <ion-title style="color: dodgerblue">
-          <ion-icon name="grid"></ion-icon>
-          Мени</ion-title
+        <ion-title style="color: white">
+          <img src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/64/ffffff/external-list-miscellaneous-kiranshastry-lineal-color-kiranshastry.png"/>
+        </ion-title>
+        <ion-button
+          slot="end"
+          fill="clear"
+          expand="block"
+          routerDirection="forward"
+          [hidden]="ishidden"
+          (click)="izlogujSe()"
         >
-        <ion-button slot="end" 
-        fill="clear"
-        expand="block"
-        routerDirection="forward"
-        [hidden]="ishidden"
-        (click)="izlogujSe()"
-      >
-        <ion-icon name="log-out"></ion-icon>
-        Одјави се</ion-button
-      >
+        <img src="https://img.icons8.com/clouds/50/000000/exit.png"/>
+          Одјава</ion-button
+        >
       </ion-toolbar>
     </ion-header>
 
@@ -23,22 +23,20 @@
       <ion-list *ngFor="let pages of navigate">
         <ion-menu-toggle auto-hide="true">
           <ion-button
+            class="meni_item"
             style="float: left"
             fill="clear"
             expand="block"
             routerDirection="forward"
             (click)="openPage(pages.url)"
           >
-            <ion-icon [name]="pages.icon" slot="start"></ion-icon>
+            <img [src]="pages.icon" />
+            <!-- <ion-icon [name]="pages.icon" slot="start"></ion-icon> -->
             {{ pages.title }}
           </ion-button>
         </ion-menu-toggle>
-  
       </ion-list>
-     
-     
     </ion-content>
   </ion-menu>
   <ion-router-outlet id="content1"></ion-router-outlet>
 </ion-app>
-

@@ -1,0 +1,13 @@
+ion-content.background{
+    --background: url('../../assets/picture/plava-bela.jpg') no-repeat left 50%/cover;
+}
+.actionbutton {
+    min-width: 90px;
+    border-radius: 2px;
+    background-color: #008CBA;
+    position: unset;
+    color: #ffffff;
+    border-radius: 2px;
+    font-size: 20px;
+    height: 50px; 
+  }

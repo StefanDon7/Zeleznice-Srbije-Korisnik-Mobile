@@ -145,8 +145,8 @@ export class MainPage implements OnInit {
         this.mainService
           .rezervisiKartu(this.klijent, polazakid)
           .subscribe((data) => {
+            this.vratiPoruku("Полазак","", "Успешно сте резервисали карту за полазак!");
           });
-        this.vratiPoruku("Полазак","", "Успешно сте резервисали карту за полазак!");
       } else {
         this.vratiPoruku(
           "Пажња",

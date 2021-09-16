@@ -3,14 +3,16 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
+      <img src="https://img.icons8.com/clouds/80/ffffff/train.png"/>
     </ion-buttons>
-    <ion-title> Ред вожње </ion-title>
+    <ion-title style="color: #3171e0	; font-size: 25px;">
+      Ред вожње </ion-title>
  
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content class="background">
 
-    
+  <ion-grid>
     <ion-list>
       <ion-item class="pocetnaStanica">
         <ion-label class="stanicaNazivLbl">
@@ -76,9 +78,10 @@
         fill="clear"
         style="text-transform: none"
       >
-        <ion-icon name="search"></ion-icon>
+      <img src="https://img.icons8.com/clouds/60/000000/search.png"/>
         Претражи поласке</ion-button
       >
+      </ion-grid>
    
 
   
@@ -124,13 +127,13 @@
           <ion-button
             class="vratiMedjustanice"
             (click)="vratiMedjustaniceZaPolazak(polazak.linija.linijaID,polazak.linija.stanicaPocetna.nazivStanice,polazak.linija.stanicaKrajnja.nazivStanice)"
-            >Medjustanice
+            >Међустанице
             <ion-icon name="train"></ion-icon>
           </ion-button>
           <ion-button
             class="rezervisi"
             (click)="rezervisiKartu(polazak.polazakID,polazak.datumPolaska)"
-            >Rezervisi
+            >Резервиши
             <ion-icon name="checkbox"></ion-icon>
           </ion-button>
         </ion-card>

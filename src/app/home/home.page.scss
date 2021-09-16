@@ -1,4 +1,6 @@
-
+ion-content.background{
+  --background: url('../../assets/picture/train3.jpg') no-repeat left 50%/cover;
+}
 .buttons-action{
   margin-left: 5px;
 }
@@ -31,4 +33,6 @@
   margin-right: 13px;
   font-size: small;
   font-family: 'Nunito',sans-serif;
+  height: 50px; 
+  
 }

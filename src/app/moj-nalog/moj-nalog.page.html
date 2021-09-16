@@ -2,55 +2,71 @@
   <ion-toolbar>
       <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
+      <img src="https://img.icons8.com/clouds/80/000000/edit-user.png"/>
       </ion-buttons>
-    <ion-title style="color: #3171e0	;">
-      Налог
+    <ion-title style="color: #3171e0	; font-size: 25px;">Налог
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content >
+<ion-content class="background">
 <form #a="ngForm" (ngSubmit)="izmeniNalog(a)">
 
     <div class="ion-padding">
       <ion-item>
         <ion-label position="floating"></ion-label>
-        <ion-input type="text" disabled="true" style="color: #646262;" >{{klijent?.email}}</ion-input>
+        <ion-input type="text" disabled="true" style="color: #646262;" >
+          <img src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/15/ffffff/external-email-advertising-kiranshastry-lineal-color-kiranshastry-1.png"/> 
+          {{klijent?.email}}</ion-input>
       </ion-item>
       <br>
       <ion-item>
         <ion-label position="floating"></ion-label>
-        <ion-input type="text" disabled="true" style="color: #646262;">{{klijent?.ime}}</ion-input>
+        <ion-input type="text" disabled="true" style="color: #646262;">
+          <img src="https://img.icons8.com/fluency/15/ffffff/name.png"/>  
+          {{klijent?.ime}}</ion-input>
       </ion-item>
       <br>
       <ion-item>
         <ion-label position="floating"></ion-label>
-        <ion-input type="text" disabled="true" style="color: #646262;">{{klijent?.prezime}}</ion-input>
+        <ion-input type="text" disabled="true" style="color: #646262;">
+          <img src="https://img.icons8.com/fluency/15/ffffff/name.png"/>  
+          {{klijent?.prezime}}</ion-input>
       </ion-item>
       <br>
       <ion-item>
-        <ion-label position="floating" >{{klijent?.korisnickoIme}}</ion-label>
+        <ion-label position="floating" >
+          <img src="https://img.icons8.com/fluency/15/ffffff/name.png"/>  
+          {{klijent?.korisnickoIme}}</ion-label>
         <ion-input type="text" ngModel name="korisnickoIme"></ion-input>
       </ion-item>
+      <br>
+      <ion-button type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;">
+        <img src="https://img.icons8.com/clouds/60/ffffff/save-close.png"/>
+       Сачувај</ion-button>
     </div>   
-    <ion-button type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;">
-      <ion-icon name="person"></ion-icon>
-     Промени корисничко име</ion-button>
+    
 </form>
 <form #f="ngForm" (ngSubmit)="izmeniSifru(f)">
   <div class="ion-padding">
   <ion-item>
-    <ion-label position="floating">Нова лозинка</ion-label>
+    <ion-label position="floating">
+      <img src="https://img.icons8.com/office/16/000000/key.png"/>
+      Нова лозинка</ion-label>
     <ion-input type="password" ngModel name="password"></ion-input>
   </ion-item>
   <br>
   <ion-item>
-    <ion-label position="floating">Понови нову лозинку</ion-label>
+    <ion-label position="floating">
+      <img src="https://img.icons8.com/office/16/000000/key.png"/>
+      Понови нову лозинку</ion-label>
     <ion-input type="password" ngModel name="repassword"></ion-input>
   </ion-item>
+  <br>
+  <ion-button type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;">
+    <img src="https://img.icons8.com/clouds/60/ffffff/key.png"/>
+   Промени лозинку</ion-button>
 </div>   
-<ion-button type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;">
-  <ion-icon name="key"></ion-icon>
- Промени лозинку</ion-button>
+
 </form>
 </ion-content>
 <ion-footer>

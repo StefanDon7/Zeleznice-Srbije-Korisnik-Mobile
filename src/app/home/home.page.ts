@@ -48,7 +48,7 @@ export class HomePage {
       sessionStorage.setItem("klijentKorisnickoIme", this.klijent.korisnickoIme+"");
       this.vratiPoruku(
         "Успешно пријављивање",
-        "Добро дошли",
+        "Добродошли",
         "Корисник: " + this.klijent.ime + " " + this.klijent.prezime
       );
       this.router.navigate(["/main"]);

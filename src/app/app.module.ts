@@ -8,7 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import{HttpClient,HttpClientModule} from '@angular/common/http';
+import{HttpClientModule} from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 
 import{CookieService} from 'angular2-cookie/services/cookies.service';
@@ -26,7 +26,6 @@ import { AlertController } from '@ionic/angular';
     CookieService,
     NgxWebstorageModule,
     SplashScreen,
-    HttpClient,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

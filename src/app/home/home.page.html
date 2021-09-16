@@ -2,9 +2,10 @@
   <ion-toolbar>
       <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
+      <img src="https://img.icons8.com/clouds/80/ffffff/home-page.png"/>
       </ion-buttons>
-    <ion-title>
-      Железнице Србије
+    <ion-title  >
+     Пријави се
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,12 +13,12 @@
   <div class="ion-padding">
     <div class="button-action">
       <ion-button fill="clear" color="dark" size="small">
-        <ion-icon name="log-in"></ion-icon>
+        <img src="https://img.icons8.com/bubbles/35/000000/user.png"/>
         <b><p class="signin-text">
          Пријави се</p></b>
       </ion-button>
       <ion-button fill="clear" color="dark" size="small" routerLink="/register" routerDirection="root">
-        <ion-icon name="person-add"></ion-icon>
+        <img src="https://img.icons8.com/bubbles/30/000000/add-user-male.png"/>
         <b><p class="signup-text">
           Направи налог</p></b>
       </ion-button>
@@ -27,18 +28,23 @@
     <form #f="ngForm" (ngSubmit)="signIn(f)">
       <div class="ion-padding">
         <ion-item>
-          <ion-label position="floating">Емаил адреса</ion-label>
+          <ion-label position="floating">
+            <img src="https://img.icons8.com/external-kiranshastry-lineal-color-kiranshastry/15/ffffff/external-email-advertising-kiranshastry-lineal-color-kiranshastry-1.png"/> 
+            Емаил адреса</ion-label>
           <ion-input type="text" ngModel name="email" required minlength="6" required></ion-input> 
         </ion-item>
         <br>
         <ion-item>
-          <ion-label position="floating">Лозинка</ion-label>
+          <ion-label position="floating">
+            <img src="https://img.icons8.com/office/15/000000/key.png"/>
+            Лозинка</ion-label>
           <ion-input type="password" ngModel name="password" required></ion-input>
         </ion-item>
        
       </div>
         <ion-button type="submit" class="actionbutton" expand="block" fill="clear" style="text-transform: none;">
-          <ion-icon name="log-in"></ion-icon>
+          <!-- <ion-icon name="log-in"></ion-icon> -->
+          <img src="https://img.icons8.com/clouds/60/000000/user.png"/>
           Пријави се</ion-button>
     </form>
   </div>
