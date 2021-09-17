@@ -2,7 +2,7 @@
   <ion-toolbar>
       <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-      <img src="https://img.icons8.com/clouds/80/ffffff/home-page.png"/>
+      <img src="https://img.icons8.com/clouds/80/ffffff/add-user-male.png"/>
       </ion-buttons>
     <ion-title>
      Направи налог
@@ -76,12 +76,29 @@
   
 </ion-content>
 <ion-footer class="footer">
+  
   <ion-toolbar>
-    <ion-item style="float: right;"> © Железнице Србије</ion-item>
-    <img src="https://img.icons8.com/fluency/50/000000/facebook.png"/>
-    <img src="https://img.icons8.com/color/50/000000/instagram-new--v1.png"/>
-    <img src="https://img.icons8.com/fluency/50/000000/twitter.png"/>
-    <img src="https://img.icons8.com/color/48/ffffff/linkedin.png"/> 
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="schedule">
+          <ion-icon name="caret-back-outline"></ion-icon>
+       
+          <!-- <ion-badge></ion-badge> -->
+        </ion-tab-button>
+    
+  
+    
+        <ion-tab-button tab="map">
+          <ion-icon name="ellipse-outline"></ion-icon>
+        
+        </ion-tab-button>
+    
+        <ion-tab-button tab="about">
+          <ion-icon name="square-outline"></ion-icon>
+      
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
    </ion-toolbar>
 </ion-footer>
 

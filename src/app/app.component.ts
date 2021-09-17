@@ -42,22 +42,26 @@ export class AppComponent {
       {
         title : "Почетна",
         url   : "/home",
-        icon  : "https://img.icons8.com/clouds/70/ffffff/home-page.png"
+        icon  : "https://img.icons8.com/clouds/70/ffffff/home-page.png",
+        number: 0
       },
       {
         title : "Ред вожње",
         url   : "/main",
-        icon  : "https://img.icons8.com/clouds/70/ffffff/train.png"
+        icon  : "https://img.icons8.com/clouds/70/ffffff/train.png",
+        number: 0
       },
       {
         title : "Мој налог",
         url   : "/moj-nalog",
-        icon  : "https://img.icons8.com/clouds/80/000000/edit-user.png"
+        icon  : "https://img.icons8.com/clouds/80/000000/edit-user.png",
+        number: 0
       },
       {
         title : "Моје резервације",
         url   : "/moje-rezervacije",
-        icon  : "https://img.icons8.com/clouds/80/000000/ticket.png"
+        icon  : "https://img.icons8.com/clouds/80/000000/ticket.png",
+        number: 0
       },
     ]
   }
