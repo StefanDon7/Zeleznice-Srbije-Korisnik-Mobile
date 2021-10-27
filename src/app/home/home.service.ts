@@ -10,8 +10,8 @@ export class HomeService {
   constructor(private http:HttpClient) { }
 
 
-  signin(email:string,password:string){
-    return this.http.post<Klijent>('http://localhost:8089/api/klijent/get',{ "email": email,"lozinka": password})
+  signin(email:string,lozinka:string){
+    return this.http.post<Klijent>('http://localhost:8089/api/klijent/get',{ "email": email,"lozinka": lozinka})
   }
  
 }

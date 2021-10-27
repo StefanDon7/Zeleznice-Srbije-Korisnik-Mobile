@@ -10,13 +10,13 @@ export class MojNalogService {
   constructor(private http:HttpClient) { }
 
   vratiKlijenta(id:string){
-    return this.http.post<Klijent>('http://localhost:8089/api/klijent/getbyid',{ "id": id})
+    return this.http.post<Klijent>('http://localhost:8089/api/klijent/getbyid',{ "klijentID": id})
   }
   izmeniSifru(id:string,sifra:string){
-    return this.http.post('http://localhost:8089/api/klijent/updatepassword',{ "id": id,"lozinka": sifra})
+    return this.http.put('http://localhost:8089/api/klijent/updatepassword',{ "klijentID": id,"lozinka": sifra})
   }
   izmeniKorisnickoIme(id:string,korisnickoIme:string){
-    return this.http.post('http://localhost:8089/api/klijent/updateusername',{ "id": id,"korisnickoIme": korisnickoIme})
+    return this.http.put('http://localhost:8089/api/klijent/updateusername',{ "klijentID": id,"korisnickoIme": korisnickoIme})
   }
 
 }

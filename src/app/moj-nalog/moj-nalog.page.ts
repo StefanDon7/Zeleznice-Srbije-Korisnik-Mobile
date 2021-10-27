@@ -26,7 +26,7 @@ export class MojNalogPage implements OnInit {
   }
 
   vratiKlijenta() {
-    this.sessionItem = sessionStorage.getItem("klijent");
+    this.sessionItem = sessionStorage.getItem("klijentID");
     if (this.sessionItem == null) {
       this.vratiPoruku("Пажња","","Морате се регистровати!");
       this.router.navigate(["/register"]);
@@ -37,14 +37,14 @@ export class MojNalogPage implements OnInit {
     }
   }
   izmeniNalog(form:NgForm){
-    let sessionItem = sessionStorage.getItem("klijent");
+    let sessionItem = sessionStorage.getItem("klijentID");
       this.mojnalogservice.izmeniKorisnickoIme(sessionItem,form.value.korisnickoIme).subscribe(data=>{
         let odgovor=data;
         if(odgovor==0){
           this.vratiPoruku("Пажња","","Систем није успео да запамти промену!");
           form.reset();
         }else{
-          this.vratiPoruku("Пажња","","Успешно сте променили лозинку!");
+          this.vratiPoruku("Успешна измена","","Успешно сте променили лозинку!");
           form.reset();
           this.refresh();
         }

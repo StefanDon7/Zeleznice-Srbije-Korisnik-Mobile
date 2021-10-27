@@ -32,7 +32,7 @@ export class HomePage {
       .signin(form.value.email, form.value.password)
       .subscribe((data) => {
         if(data!=null){
-          this.klijent = new Klijent(data.klijentID,data.korisnickoIme,data.ime,data.prezime,data.email,null);
+          this.klijent = new Klijent(data.klijentID,data.email,data.korisnickoIme,data.ime,data.prezime,null);
         }
         this.prijaviKlijenta();
         form.resetForm();
@@ -41,11 +41,11 @@ export class HomePage {
   }
   prijaviKlijenta() {
     if (this.klijent != null) {
-      sessionStorage.setItem("klijent", this.klijent.klijentID+"");
-      sessionStorage.setItem("klijentIme", this.klijent.ime+"");
-      sessionStorage.setItem("klijentPrezime", this.klijent.prezime+"");
+      sessionStorage.setItem("klijentID", this.klijent.klijentID+"");
       sessionStorage.setItem("klijentEmail", this.klijent.email+"");
       sessionStorage.setItem("klijentKorisnickoIme", this.klijent.korisnickoIme+"");
+      sessionStorage.setItem("klijentIme", this.klijent.ime+"");
+      sessionStorage.setItem("klijentPrezime", this.klijent.prezime+"");
       this.vratiPoruku(
         "Успешно пријављивање",
         "Добродошли",
@@ -71,6 +71,7 @@ export class HomePage {
     });
     await alert.present();
   }
+  
   proveriPolja(form: NgForm) {
     if (form.value.email == "" || form.value.email == null) {
       return false;

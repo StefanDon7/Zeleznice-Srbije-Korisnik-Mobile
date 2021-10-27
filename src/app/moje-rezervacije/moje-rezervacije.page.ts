@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
 import { CookieService } from "angular2-cookie/services/cookies.service";
+import { Rezervacija } from "../models/rezervacija.model";
 import { MojeRezervacijeService } from "./moje-rezervacije.service";
 
 @Component({
@@ -16,26 +17,28 @@ export class MojeRezervacijePage implements OnInit {
     public _cookieService: CookieService,
     private alertController: AlertController
   ) {
-    this.klijent=sessionStorage.getItem("klijent");
-    this.rezervacije=this.vratiRezervacijeZaKlijenta();
+    this.klijent=sessionStorage.getItem("klijentID");
   }
 
-  rezervacije: any = [];
+  rezervacije: Rezervacija[] = [];
   klijent: any;
   ngOnInit() {
     this.vratiRezervacijeZaKlijenta();
   }
 
   vratiRezervacijeZaKlijenta() {
-    this.klijent = sessionStorage.getItem("klijent");
+    this.klijent = sessionStorage.getItem("klijentID");
     if (this.klijent == null) {
       this.vratiPoruku("Пажња","","Морате се регистровати!");
       this.router.navigate(["/register"]);
     } else {
+      console.log(this.klijent)
       this.mojerezervacijeservice
         .vratiSveRezervacije(this.klijent)
-        .subscribe((data) => {
-          this.rezervacije = data;
+        .subscribe((rezervacije) => {
+          this.rezervacije = rezervacije;
+          console.log(this.rezervacije)
+          console.log(this.klijent)
         });
     }
   }

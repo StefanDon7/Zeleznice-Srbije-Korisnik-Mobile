@@ -8,6 +8,10 @@ import { MainService } from "./main.service";
 import { DatePipe } from "@angular/common";
 import { AlertController } from "@ionic/angular";
 import { Identifiers } from "@angular/compiler";
+import { Medjustanica } from "../models/medjustanica.model";
+import { Polazak } from "../models/polazak.model";
+import { Rezervacija } from "../models/rezervacija.model";
+import { Subscription } from "rxjs/internal/Subscription";
 
 @Component({
   selector: "app-main",
@@ -15,22 +19,19 @@ import { Identifiers } from "@angular/compiler";
   styleUrls: ["./main.page.scss"],
 })
 export class MainPage implements OnInit {
-  
-
   constructor(
     private mainService: MainService,
     private router: Router,
     public datepipe: DatePipe,
     private alertController: AlertController
-    ) {
-     
-      
-  }
-  stanice1: any = [];
-  stanice2: any = [];
-  polasci: any = [];
-  
-
+  ) {}
+  sub: Subscription;
+  stanice1: Stanica[] = [];
+  stanice2: Stanica[] = [];
+  selectedStanica1: string;
+  selectedStanica2: string;
+  polasci: any;
+  listaMedjustanica: Medjustanica[] = [];
 
   today: any;
   year: any;
@@ -38,44 +39,38 @@ export class MainPage implements OnInit {
   selectedDateConverted: any;
 
   klijent: any;
-  
-  rezervacija: any;
-  
-  
-  listaMedjustanica:any=[];
+  rezervacija: Rezervacija;
 
   ngOnInit() {
     this.vratiStanice();
     this.vratiStanice2();
     this.vratiPolaskeZaDanasnjiDan();
   }
-
-
+  ngOnDestroy() {
+    if (this.sub) this.sub.unsubscribe();
+  }
   /*
   Vraca sve polaske za pocetnu stanicu,krajnju stanicu i datum!
   */
-  pretrazi(stanicaPocetna: Stanica, stanicaKrajnja: Stanica) {
-    if(!this.parametriDobri(stanicaPocetna,stanicaKrajnja)){
-      this.vratiPoruku("Грешка","","Сва поља морају бити изабрана!")
-    }else{
-    this.mainService
-      .vratiPolaske(
-        stanicaPocetna.nazivStanice,
-        stanicaKrajnja.nazivStanice,
-        this.selectedDateConverted
-      )
-      .subscribe((polasci) => {
-        console.log(polasci)
-        this.polasci = polasci;
-      });
-      
+  pretrazi() {
+    if (!this.parametriDobri(this.selectedStanica1, this.selectedStanica2)) {
+      this.vratiPoruku("Грешка", "", "Сва поља морају бити изабрана!");
+    } else {
+      this.sub = this.mainService
+        .vratiPolaske(
+          this.selectedStanica1,
+          this.selectedStanica2,
+          this.selectedDateConverted
+        )
+        .subscribe((polasci) => {
+          this.polasci = polasci;
+        });
     }
   }
 
-  parametriDobri(stanicaPocetna:Stanica,stanicaKrajnja:Stanica){
-    if(stanicaPocetna==null || stanicaKrajnja==null)
-      return false;
-    else if(this.selectedDateConverted==null){
+  parametriDobri(stanicaPocetna: string, stanicaKrajnja: string) {
+    if (stanicaPocetna == null || stanicaKrajnja == null) return false;
+    else if (this.selectedDateConverted == null) {
       return false;
     }
     return true;
@@ -102,103 +97,101 @@ export class MainPage implements OnInit {
   */
   vratiPolaskeZaDanasnjiDan() {
     this.convertDanas();
-    this.mainService.vratiPolaskeZaDanasnjiDan(this.today).subscribe((polasci) => {
-      this.polasci = polasci;
-      console.log(polasci);
-    });
+    this.sub = this.mainService
+      .vratiPolaskeZaDanasnjiDan(this.today)
+      .subscribe((polasci) => {
+        this.polasci = polasci;
+      });
   }
 
- 
-  /*
-  Prilikom selektovanja datuma u uzima datum i konvertuje ga u odgovarajuci format kako bi u bazi mogao da ga nadje!
-  */
+  // Prilikom selektovanja datuma u uzima datum i konvertuje ga u odgovarajuci format kako bi u bazi mogao da ga nadje!
+
   convert() {
-    let selectedDateConverted = this.datepipe.transform(
+    this.selectedDateConverted  = this.datepipe.transform(
       this.selectedDate,
       "yyyy-MM-dd"
     );
-    this.selectedDateConverted = selectedDateConverted;
-    console.log(selectedDateConverted);
   }
+
   convertDanas() {
     this.today = new Date().toISOString();
-    console.log(this.today);
-    let danas = this.datepipe.transform(
-      this.today,
-      "yyyy-MM-dd"
-    );
-    let godina = this.datepipe.transform( 
-      this.today,
-      "yyyy"
-    );
-    this.today = danas;
-    this.year=godina;
+    this.today = this.datepipe.transform(this.today, "yyyy-MM-dd");
+    this.year = this.datepipe.transform(this.today, "yyyy");
     this.year++;
-    console.log(this.today);
-    console.log(this.year);
   }
   /*
     Rezervisi kartu!
   */
   rezervisiKartuUnosUBazu(polazakid: string) {
-      if (this.rezervacija==null) {
-        this.mainService
-          .rezervisiKartu(this.klijent, polazakid)
-          .subscribe((data) => {
-            this.vratiPoruku("Полазак","", "Успешно сте резервисали карту за полазак!");
-          });
-      } else {
-        this.vratiPoruku(
-          "Пажња",
-          "",
-          "Већ сте резервисали овај полазак!!"
-        );
-      }
-      this.rezervacija=null;
+    if (this.rezervacija == null) {
+      console.log(this.klijent);
+      console.log(polazakid);
+      this.mainService
+        .rezervisiKartu(this.klijent, polazakid)
+        .subscribe((data) => {
+          this.vratiPoruku(
+            "Полазак",
+            "",
+            "Успешно сте резервисали карту за полазак!"
+          );
+        });
+    } else {
+      this.vratiPoruku("Пажња", "", "Већ сте резервисали овај полазак!!");
+    }
+    this.rezervacija = null;
   }
 
   /*Prikazuje sve medjustanice za odredjenu liniju tj polazak koji klijent*/
-  vratiMedjustaniceZaPolazak(id: string,pocetna:string,krajnja:string) {
+  vratiMedjustaniceZaPolazak(id: string, pocetna: string, krajnja: string) {
     this.mainService.vratiMedjustaniceZaPolazak(id).subscribe((data) => {
       this.listaMedjustanica = data;
-      console.log(this.listaMedjustanica)
-      let string="";
+      let string = "";
       for (let index = 0; index < this.listaMedjustanica.length; index++) {
-        string+=this.listaMedjustanica[index].redniBroj+". "+this.listaMedjustanica[index].stanica.nazivStanice+"<p>"
+        string +=
+          this.listaMedjustanica[index].redniBroj +
+          ". " +
+          this.listaMedjustanica[index].stanica.naziv +
+          "<p>";
       }
-      this.vratiPoruku("Међустанице на линији",pocetna+"-"+krajnja,string);
+      this.vratiPoruku(
+        "Међустанице на линији",
+        pocetna + "-" + krajnja,
+        string
+      );
     });
   }
   /*
   Proverava da li je klijent vec rezervisao kartu za polazak!
   */
-  rezervisiKartu(polazakID: string,datumPolaska1:string) {
-    console.log("1");
+  rezervisiKartu(polazakID: string, datumPolaska1: string) {
     let datumPolaska = new Date(datumPolaska1);
-    console.log(datumPolaska)
-    var vremeRezervacije=new Date;
-    console.log(vremeRezervacije)
-    this.klijent = sessionStorage.getItem("klijent");
+    var vremeRezervacije = new Date();
+    this.klijent = sessionStorage.getItem("klijentID");
     if (this.klijent == null) {
-      this.vratiPoruku("Пажња", "", "Морате бити пријављени како би резервисали карту!");
+      this.vratiPoruku(
+        "Пажња",
+        "",
+        "Морате бити пријављени како би резервисали карту!"
+      );
       this.router.navigate(["/home"]);
       return;
-    } 
-    
-    if(datumPolaska>vremeRezervacije){
-    console.log("2");
-    this.mainService
-      .proveriRezervaciju(this.klijent, polazakID)
-      .subscribe((data) => {
-        console.log("3");
-            this.rezervacija=data;
-            console.log("4")
-            this.rezervisiKartuUnosUBazu(polazakID);
-      });
-    }else{
-      this.vratiPoruku("Пажња","","Не можете резервисати карту за полазак који је реализован!")
     }
-     
+
+    if (datumPolaska > vremeRezervacije) {
+      this.sub = this.mainService
+        .proveriRezervaciju(this.klijent, polazakID)
+        .subscribe((data) => {
+          console.log(data)
+          this.rezervacija = data;
+          this.rezervisiKartuUnosUBazu(polazakID);
+        });
+    } else {
+      this.vratiPoruku(
+        "Пажња",
+        "",
+        "Не можете резервисати карту за полазак који је реализован!"
+      );
+    }
   }
 
   async vratiPoruku(header: string, subHeader: string, poruka: string) {
@@ -212,7 +205,5 @@ export class MainPage implements OnInit {
   }
   refresh(): void {
     window.location.reload();
+  }
 }
-}
-
-

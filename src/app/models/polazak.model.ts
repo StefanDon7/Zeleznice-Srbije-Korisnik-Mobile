@@ -8,6 +8,7 @@ export class Polazak{
         public datumPolaska:Date,
         public datumDolaska:Date,
         public linija:Linija,
-        public Voz:Voz
+        public Voz:Voz,
+        public napomena:string
     ){}
 }

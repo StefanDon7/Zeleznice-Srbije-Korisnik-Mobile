@@ -5,10 +5,10 @@ export class Linija{
     constructor(
         public linijaID: number,
         public nazivLinije: string,
-        public stanicaPolazna: Stanica,
-        public stanicaKrajnja: Stanica,
         public minutaza: number,
         public kilometraza:number,
+        public stanicaPocetna: Stanica,
+        public stanicaKrajnja: Stanica,
         public tipLinije:TipLinije
     ){}
 }

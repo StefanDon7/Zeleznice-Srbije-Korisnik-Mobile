@@ -24,7 +24,7 @@ export class AppComponent {
       ) {
     this.sideMenu();
     this.initializeApp();
-    if(sessionStorage.getItem("klijent")!=null){
+    if(sessionStorage.getItem("klijentID")!=null){
       this.ishidden=false;
     }
   }
@@ -39,12 +39,6 @@ export class AppComponent {
   sideMenu()
   {  this.navigate =
     [
-      {
-        title : "Почетна",
-        url   : "/home",
-        icon  : "https://img.icons8.com/clouds/70/ffffff/home-page.png",
-        number: 0
-      },
       {
         title : "Ред вожње",
         url   : "/main",
@@ -61,20 +55,20 @@ export class AppComponent {
         title : "Моје резервације",
         url   : "/moje-rezervacije",
         icon  : "https://img.icons8.com/clouds/80/000000/ticket.png",
-        number: 0
+        number: 8
       },
     ]
   }
   openPage(page:string){
     if(page=="/moje-rezervacije"){
-      if(sessionStorage.getItem("klijent")==null){   
+      if(sessionStorage.getItem("klijentID")==null){   
         this.router.navigate(["/register"]);
         this.vratiPoruku("Пажња","","Морате бити регистровати!");
       }else{
         this.router.navigate([page])
       }
     }else if(page=="/moj-nalog"){
-      if(sessionStorage.getItem("klijent")==null){
+      if(sessionStorage.getItem("klijentID")==null){
         this.router.navigate(["/register"]);
         this.vratiPoruku("Пажња","","Морате бити регистровати!");
       }else{
@@ -102,7 +96,7 @@ export class AppComponent {
   Unistava sessiju za klijenta i odjavljuje se!
   */
  izlogujSe() {
-  sessionStorage.removeItem("klijent");
+  sessionStorage.removeItem("klijentID");
   sessionStorage.removeItem("klijentEmail");
   sessionStorage.removeItem("klijentIme");
   sessionStorage.removeItem("klijentPrezime");
